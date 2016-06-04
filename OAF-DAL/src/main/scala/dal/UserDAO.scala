@@ -35,5 +35,10 @@ object UserDAO extends BaseDAO[UserDBModel,Long, Session]{
     users.filter(_.username === username).firstOption
   }
 
+  def activate(id: Long)(implicit session: Session): Unit = {
+    val q = for { u <- users if u.id === id } yield u.status
+    q.update(UserStatus.Active).run
+  }
+
 
 }

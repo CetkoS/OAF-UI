@@ -29,4 +29,8 @@ object RegistrationDAO extends BaseDAO[RegistrationDBModel,Long, Session]{
   def create(model: RegistrationDBModel)(implicit session: Session): Long = {
     (registrations returning registrations.map(_.id)) += model
   }
+
+  def findByHash(hash: String)(implicit session: Session): Option[RegistrationDBModel] = {
+    registrations.filter(r => r.hash === hash && r.status === RegistrationStatus.Active).firstOption
+  }
 }
