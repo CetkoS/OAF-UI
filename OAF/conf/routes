@@ -1,0 +1,18 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# Home page
+GET     /                           @controllers.Application.login
+
+#Registration
+GET     /registration                 @controllers.RegistrationController.showRegistration
+POST    /registration                 @controllers.RegistrationController.registration
+GET     /confirmRegistration/:hash    @controllers.RegistrationController.confirmRegistration(hash)
+#Login
+GET    /showLogin                     @controllers.RegistrationController.showLogin
+POST   /authenticate                  @controllers.RegistrationController.authenticate
+
+# Map static resources from the /public folder to the /assets URL path
+GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
+
