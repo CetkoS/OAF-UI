@@ -6,7 +6,8 @@ import scala.slick.lifted.Tag
 import play.api.db.slick.Config.driver.simple._
 
   case class UserDBModel(id: Option[Long], firstName: String, lastName: String,
-                  username: String, status: UserStatus.Value, companyId: Option[Long], role: UserRole.Value, password: Option[String])
+                         username: String, status: UserStatus.Value, companyId: Option[Long],
+                         role: UserRole.Value, password: Option[String], email: String)
 
 
   class UserTable(tag: Tag) extends Table[UserDBModel](tag, "USER") {
@@ -19,8 +20,9 @@ import play.api.db.slick.Config.driver.simple._
     def companyId = column[Long]("company_id", O.Nullable)
     def role = column[UserRole.Value]("role", O.NotNull)
     def password = column[String]("password",O.Nullable)
+    def email = column[String]("email",O.Nullable)
 
-    def * = (id.?, firstName, lastName, username, status, companyId.?, role, password.?) <> (UserDBModel.tupled, UserDBModel.unapply _)
+    def * = (id.?, firstName, lastName, username, status, companyId.?, role, password.?, email) <> (UserDBModel.tupled, UserDBModel.unapply _)
   }
 
 
