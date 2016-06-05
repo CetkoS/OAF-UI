@@ -1,6 +1,8 @@
 package controllers
 
+import com.oaf.dal.enums.{UserRole, UserStatus}
 import forms.{LoginForm, RegistrationForm}
+import models.User
 import play.api.Logger
 import play.api.db.slick.DBAction
 import services.{RegistrationService, UserService}
@@ -45,5 +47,10 @@ class RegistrationController extends BaseController {
         Ok("Successfuly login")
       }
     )
+  }
+
+  def admin = DBAction { implicit request =>
+    val user = User(Some(1),"Aleksandar","Cetkovic","cetkocar",UserStatus.Active,None,UserRole.Administrator,"asd","cetko90@gmail.com")
+    Ok(views.html.admin.company(user))
   }
 }

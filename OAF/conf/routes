@@ -12,7 +12,8 @@ GET     /confirmRegistration/:hash    @controllers.RegistrationController.confir
 #Login
 GET    /showLogin                     @controllers.RegistrationController.showLogin
 POST   /authenticate                  @controllers.RegistrationController.authenticate
-
+#Admin
+GET    /admin                         @controllers.RegistrationController.admin
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
 
