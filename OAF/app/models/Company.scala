@@ -1,8 +1,5 @@
 package models
 
-import com.oaf.dal.enums.{UserRole, UserStatus}
-import com.oaf.dal.models.UserDBModel
-
 case class Company
 (
   id: Option[Long],

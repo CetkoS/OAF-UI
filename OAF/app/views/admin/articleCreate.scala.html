@@ -1,0 +1,41 @@
+@(user: User)
+
+@import helper._
+@admin.adminMain("Welcome to Play", user) {
+    <h1 class="page-header">
+        Create Article
+    </h1>
+
+    <div class="col-lg-7">
+        <h3 class="page-header">
+            Basic info
+        </h3>
+        @helper.form(action = routes.ArticleController.create()){
+            <input name="companyId" value=@user.companyId class="form-control" type="hidden">
+            <div class="form-group">
+                <label>Name</label>
+                <input name="name" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label>Description</label>
+                <textarea name="description" class="form-control" rows="3"></textarea>
+            </div>
+            <div class="form-group">
+                <label>Price</label>
+                <input type="number" name="price" step="any" min="0" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label>Weight</label>
+                <input type="number" name="weight" step="any" min="0" class="form-control">
+            </div>
+
+            <div class="form-group">
+                <label>Picture file</label>
+                <input name="pictureLocation" type="file">
+            </div>
+
+            <input type="submit" class="btn btn-default" value="Save">
+            }
+    </div>
+
+}

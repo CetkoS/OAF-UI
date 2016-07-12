@@ -1,0 +1,50 @@
+@(user: User, articles: Option[List[Article]])
+
+@import helper._
+@admin.adminMain("Welcome to Play", user) {
+    <h1 class="page-header">
+        Article
+    </h1>
+    @articles match {
+        case None => {
+            You first need to create company
+        }
+        case Some(articles) => {
+            @if(articles.size > 0) {
+                <div class="table-responsive">
+                    <table class="table table-hover table-striped">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Price</th>
+                                <th>Weight</th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for(article <- articles){
+                                <tr>
+                                    <td>@article.name</td>
+                                    <td>@article.price</td>
+                                    <td>@article.weight</td>
+                                    <td><a href="@routes.ArticleController.showEditPage(article.id.get.toString)">Edit</a></td>
+                                    <td>
+                                    @helper.form(action = routes.ArticleController.delete(article.id.get.toString)){
+                                        <input type="submit" class="btn btn-danger" value="Delete">
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                            </tbody>
+                    </table>
+                    <div>
+                        <a href="@routes.ArticleController.showCreatePage()" class="btn btn-default">Add Article </a>
+                    </div>
+                </div>
+            } else {
+                No created articles
+            }
+        }
+    }
+}

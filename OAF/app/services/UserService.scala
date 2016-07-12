@@ -1,7 +1,8 @@
 package services
 
 import com.oaf.dal.dal.UserDAO
-import com.oaf.dal.enums.UserStatus
+import com.oaf.dal.enums.{UserRole, UserStatus}
+import forms.admin.{CreateEmployeeData, EditEmployeeData}
 import models.User._
 import models.User
 import org.mindrot.jbcrypt.BCrypt
@@ -49,6 +50,26 @@ object UserService {
         BCrypt.checkpw(password, user.password)
       }
     }
+  }
+
+  def findAllEmployees(companyId: Long)(implicit session: Session): List[User] = {
+    Logger.info("Length" + UserDAO.findAllEmployees(companyId).map(u => User.convertToModel(u)).size + "  " + companyId)
+    UserDAO.findAllEmployees(companyId).map(u => User.convertToModel(u))
+  }
+
+  def updateEmployee(editEmployeeData: EditEmployeeData)(implicit session: Session): Unit = {
+    val oldEmployee = findById(editEmployeeData.employeeId).getOrElse(throw new Exception("User dosen't exists"))
+    val newEmployee = User(oldEmployee.id, editEmployeeData.firstName, editEmployeeData.lastName, oldEmployee.username,
+      oldEmployee.status, oldEmployee.companyId, oldEmployee.role, oldEmployee.password, editEmployeeData.email)
+    update(oldEmployee.id.get, newEmployee)
+  }
+
+  def createEmployee(createEmployeeData: CreateEmployeeData)(implicit session: Session): Long = {
+    val employee = User(None, createEmployeeData.firstName, createEmployeeData.lastName, createEmployeeData.username,
+      UserStatus.Invited, Some(createEmployeeData.companyId), UserRole.Employee,"employee123", createEmployeeData.email)
+    val userId = UserService.create(employee)
+    //Send email
+    userId
   }
 
 }

@@ -44,13 +44,9 @@ class RegistrationController extends BaseController {
         Ok("Error" + formWithErrors)
       },
       loginData => {
+        //open admin or employee page
         Ok("Successfuly login")
       }
     )
-  }
-
-  def admin = DBAction { implicit request =>
-    val user = User(Some(1),"Aleksandar","Cetkovic","cetkocar",UserStatus.Active,None,UserRole.Administrator,"asd","cetko90@gmail.com")
-    Ok(views.html.admin.company(user))
   }
 }

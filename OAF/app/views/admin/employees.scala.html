@@ -1,0 +1,50 @@
+@(user: User, employees: Option[List[User]])
+
+@import helper._
+@admin.adminMain("Welcome to Play", user) {
+    <h1 class="page-header">
+        Employee
+    </h1>
+    @employees match {
+        case None => {
+            You first need to create company
+        }
+        case Some(employees) => {
+            @if(employees.size > 0) {
+                <div class="table-responsive">
+                    <table class="table table-hover table-striped">
+                        <thead>
+                            <tr>
+                                <th>Username</th>
+                                <th>Email</th>
+                                <th>Status</th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for(employee <- employees){
+                                <tr>
+                                    <td>@employee.username</td>
+                                    <td>@employee.email</td>
+                                    <td>@employee.status</td>
+                                    <td><a href=@routes.EmployeeController.showEditPage(employee.id.get.toString) >Edit</a></td>
+                                    <td>
+                                        @helper.form(action = routes.EmployeeController.delete(employee.id.get.toString)){
+                                            <input type="submit" class="btn btn-danger" value="Delete">
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                            </tbody>
+                    </table>
+                    <div>
+                        <a href="@routes.EmployeeController.showCreatePage()" class="btn btn-default">Add Employee </a>
+                    </div>
+                </div>
+            } else {
+                No registered employees
+            }
+        }
+    }
+}

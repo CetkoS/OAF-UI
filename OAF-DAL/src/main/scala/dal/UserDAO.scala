@@ -1,6 +1,6 @@
 package com.oaf.dal.dal
 
-import com.oaf.dal.enums.UserStatus
+import com.oaf.dal.enums.{UserRole, UserStatus}
 import com.oaf.dal.models.UserDBModel
 import play.api.db.slick.Session
 import com.oaf.dal.models._
@@ -38,6 +38,16 @@ object UserDAO extends BaseDAO[UserDBModel,Long, Session]{
   def activate(id: Long)(implicit session: Session): Unit = {
     val q = for { u <- users if u.id === id } yield u.status
     q.update(UserStatus.Active).run
+  }
+
+  def updateCompanyId(id: Long, companyId: Long)(implicit session: Session): Unit = {
+    val q = for { u <- users if u.id === id } yield u.companyId
+    q.update(companyId).run
+  }
+
+  def findAllEmployees(companyId: Long)(implicit session: Session): List[UserDBModel] = {
+    users.filter(user => user.companyId === companyId && user.role === UserRole.Employee &&
+      (user.status=== UserStatus.Active || user.status === UserStatus.Invited)).list
   }
 
 

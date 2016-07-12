@@ -31,13 +31,13 @@
             <div class="collapse navbar-collapse navbar-ex1-collapse">
                 <ul class="nav navbar-nav side-nav">
                     <li>
-                        <a href="#">Company</a>
+                        <a href=@routes.CompanyController.get()>Company</a>
                     </li>
                     <li>
-                        <a href="#">Employees</a>
+                        <a href=@routes.EmployeeController.getAll()>Employees</a>
                     </li>
                     <li>
-                        <a href="#">Articles</a>
+                        <a href="@routes.ArticleController.getAll()">Articles</a>
                     </li>
                     <li>
                         <a href="#">Aditives</a>

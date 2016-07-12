@@ -12,8 +12,27 @@ GET     /confirmRegistration/:hash    @controllers.RegistrationController.confir
 #Login
 GET    /showLogin                     @controllers.RegistrationController.showLogin
 POST   /authenticate                  @controllers.RegistrationController.authenticate
-#Admin
-GET    /admin                         @controllers.RegistrationController.admin
+#Admin Comapny
+GET    /admin                         @controllers.CompanyController.get
+POST   /admin/company/add             @controllers.CompanyController.create
+POST   /admin/company/edit            @controllers.CompanyController.update
+#Admin Employee
+GET    /admin/employees/create        @controllers.EmployeeController.showCreatePage
+GET    /admin/employees               @controllers.EmployeeController.getAll
+GET    /admin/employees/:userId       @controllers.EmployeeController.showEditPage(userId)
+POST   /admin/employees/edit          @controllers.EmployeeController.update
+POST   /admin/employees/create        @controllers.EmployeeController.create
+POST   /admin/employees/:employeeId   @controllers.EmployeeController.delete(employeeId)
+#Admin Article
+GET    /admin/articles                @controllers.ArticleController.getAll
+GET    /admin/articles/create         @controllers.ArticleController.showCreatePage
+GET    /admin/articles/:articleId     @controllers.ArticleController.showEditPage(articleId)
+POST   /admin/articles/create         @controllers.ArticleController.create
+POST   /admin/article/edit            @controllers.ArticleController.update
+POST   /admin/article/:articleId      @controllers.ArticleController.delete(articleId)
+
+
+
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
 
