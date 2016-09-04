@@ -21,7 +21,7 @@ case class CreateCompanyData
 object CreateCompanyForm {
   def getCreateCompanyData = Form(
       mapping(
-        "name" -> nonEmptyText,
+        "name" -> nonEmptyText.verifying(checkCompanyNameUnique),
         "description" -> nonEmptyText,
         "phoneNumber" -> nonEmptyText,
         "logoUrl" -> nonEmptyText,

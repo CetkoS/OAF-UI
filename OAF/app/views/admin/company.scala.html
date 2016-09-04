@@ -1,7 +1,8 @@
-@(user: User, company: Option[Company], address: Option[Address])
+@(user: User, company: Option[Company], address: Option[Address], companyForm: Form[AnyRef])(implicit flash: Flash)
 
 @import helper._
-@admin.adminMain("Welcome to Play", user) {
+@admin.adminMain("Welcome to Play", user, Some(companyForm)) {
+
     @if(company.isEmpty){
        @helper.form(action = routes.CompanyController.create()){
            <h1 class="page-header">
@@ -72,7 +73,7 @@
                 </div>
                 <div class="form-group">
                     <label>Description</label>
-                    <textarea name="description" class="form-control" rows="3" required>@company.get.description</textarea>
+                    <textarea name="description" class="form-control" rows="3">@company.get.description</textarea>
                 </div>
                 <div class="form-group">
                     <label>Phone Number</label>

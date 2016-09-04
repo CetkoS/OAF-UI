@@ -1,7 +1,7 @@
-@(user: User, article: Article)
+@(user: User, article: Article, articleForm: Option[Form[AnyRef]] = None)(implicit flash: Flash)
 
 @import helper._
-@admin.adminMain("Welcome to Play", user) {
+@admin.adminMain("Welcome to Play", user, articleForm) {
     <h1 class="page-header">
         Edit Article
     </h1>
@@ -15,7 +15,7 @@
             <input name="companyId" value=@user.companyId.get class="form-control" type="hidden">
             <div class="form-group">
                 <label>Name</label>
-                <input name="name" class="form-control" value="@article.name" required>
+                <input name="name" class="form-control" value="@article.name" readonly>
             </div>
             <div class="form-group">
                 <label>Description</label>
@@ -23,7 +23,7 @@
             </div>
             <div class="form-group">
                 <label>Price</label>
-                <input type="number" name="price" step="any" min="0" value="@article.price" class="form-control" required>
+                <input name="price" type="number" step="any" min="0" value="@article.price" class="form-control" required>
             </div>
             <div class="form-group">
                 <label>Weight</label>

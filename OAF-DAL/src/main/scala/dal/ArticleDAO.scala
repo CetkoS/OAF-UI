@@ -22,6 +22,10 @@ object ArticleDAO extends BaseDAO[ArticleDBModel,Long, Session]{
     articles.filter(_.id === id).firstOption
   }
 
+  def findByNameAndCompany(name: String, companyId: Long)(implicit session: Session): Option[ArticleDBModel] = {
+    articles.filter(article => article.companyId === companyId && article.name === name).firstOption
+  }
+
   def delete(id: Long)(implicit session: Session): Unit = {
     val q = for { u <- articles if u.id === id } yield u.status
     q.update(ArticleStatus.Inactive).run

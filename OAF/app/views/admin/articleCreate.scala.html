@@ -1,7 +1,7 @@
-@(user: User)
+@(user: User, articleForm: Option[Form[AnyRef]] = None)(implicit flash: Flash)
 
 @import helper._
-@admin.adminMain("Welcome to Play", user) {
+@admin.adminMain("Welcome to Play", user, articleForm) {
     <h1 class="page-header">
         Create Article
     </h1>

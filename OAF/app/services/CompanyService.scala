@@ -15,6 +15,12 @@ object CompanyService {
     }
   }
 
+  def findByName(name: String): Option[Company] = {
+    play.api.db.slick.DB.withTransaction { implicit session =>
+      CompanyDAO.findByName(name).map(u => u)
+    }
+  }
+
   def update(editCompanyData: EditCompanyData): Unit = {
     play.api.db.slick.DB.withTransaction { implicit session =>
       val company = Company(Some(editCompanyData.companyId), editCompanyData.name, editCompanyData.description, editCompanyData.addressId,

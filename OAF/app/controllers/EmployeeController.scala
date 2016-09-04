@@ -5,6 +5,7 @@ import forms.admin.{CreateEmployeeForm, EditEmployeeForm}
 import models.User
 import play.api.Logger
 import play.api.Play.current
+import play.api.data.Form
 import play.api.db.slick.{DBAction, _}
 import services.UserService
 
@@ -21,22 +22,23 @@ class EmployeeController extends BaseController {
 
   def showEditPage(userId: String) = StackAction(AuthorityKey -> Administrator) { implicit request =>
     val employee = UserService.findById(userId.toInt)
-        Ok(views.html.admin.employeeEdit(loggedIn, employee.get))
+        Ok(views.html.admin.employeeEdit(loggedIn, employee.get)).flashing("employeeId" -> userId)
   }
 
   def showCreatePage() = StackAction(AuthorityKey -> Administrator) { implicit request =>
-    Ok(views.html.admin.employeeCreate(loggedIn))
+    Ok(views.html.admin.employeeCreate(loggedIn, EditEmployeeForm.getEditEmployeeData.asInstanceOf[Form[AnyRef]]))
   }
 
   def update() = StackAction(AuthorityKey -> Administrator) { implicit request =>
     EditEmployeeForm.getEditEmployeeData.bindFromRequest.fold(
       formWithErrors => {
-        Logger.info("UsaoErr");
-        Ok("Err" + formWithErrors)
+        val employeeId = request.body.asFormUrlEncoded.get("employeeId")(0)
+        val employee = UserService.findById(employeeId.toInt).get
+        BadRequest(views.html.admin.employeeEdit(loggedIn, employee, Some(formWithErrors.asInstanceOf[Form[AnyRef]])))
       },
       editEmployeeData => {
         UserService.updateEmployee(editEmployeeData)
-        Ok("" + editEmployeeData)
+        Redirect(routes.EmployeeController.showEditPage(editEmployeeData.employeeId.toString)).flashing("success" -> "Employee successfully updated.")
       }
     )
   }
@@ -44,18 +46,18 @@ class EmployeeController extends BaseController {
   def create() = StackAction(AuthorityKey -> Administrator) { implicit request =>
     CreateEmployeeForm.getCreateEmployeeData.bindFromRequest.fold(
       formWithErrors => {
-        Ok("Err" + formWithErrors)
+        BadRequest(views.html.admin.employeeCreate(loggedIn, formWithErrors.asInstanceOf[Form[AnyRef]]))
       },
       createEmployeeData => {
         UserService.createEmployee(createEmployeeData)
-        Ok("" + createEmployeeData)
+        Redirect(routes.EmployeeController.getAll()).flashing("success" -> "Employee successfully created.")
       }
     )
   }
 
   def delete(employeeId: String) = StackAction(AuthorityKey -> Administrator) { implicit request =>
     UserService.delete(employeeId.toInt)
-    Ok("Deleted")
+    Redirect(routes.EmployeeController.getAll()).flashing("success" -> "Employee successfully deleted.")
   }
 
 }

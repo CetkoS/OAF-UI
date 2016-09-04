@@ -26,5 +26,8 @@ object CreateArticleForm {
         "pictureLocation" -> optional(text),
         "companyId" -> longNumber
       )(CreateArticleData.apply)(CreateArticleData.unapply)
+        verifying ("Article name already exists.", result => result match {
+        case articleData => checkArticleNameUnique(articleData.name, articleData.companyId)
+      })
   )
 }

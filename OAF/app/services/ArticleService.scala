@@ -22,6 +22,12 @@ object ArticleService {
     }
   }
 
+  def findByNameAndCompany(name: String, companyId: Long): Option[Article] = {
+    play.api.db.slick.DB.withTransaction { implicit session =>
+      ArticleDAO.findByNameAndCompany(name, companyId).map(u => u)
+    }
+  }
+
   def update(id: Long, article: Article): Unit = {
     play.api.db.slick.DB.withTransaction { implicit session =>
       ArticleDAO.update(id, article)

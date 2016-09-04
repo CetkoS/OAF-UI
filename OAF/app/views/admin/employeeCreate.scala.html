@@ -1,7 +1,7 @@
-@(user: User)
+@(user: User, employeeForm: Form[AnyRef])(implicit flash: Flash)
 
 @import helper._
-@admin.adminMain("Welcome to Play", user) {
+@admin.adminMain("Welcome to Play", user, Some(employeeForm)) {
     <h1 class="page-header">
         Create Employee
     </h1>
@@ -18,7 +18,7 @@
             </div>
             <div class="form-group">
                 <label>First name</label>
-                <input name="firstName" class="form-control" required>
+                <input name="firstName" class="form-control">
             </div>
             <div class="form-group">
                 <label>Last name</label>

@@ -1,4 +1,4 @@
-@(user: User, employees: Option[List[User]])
+@(user: User, employees: Option[List[User]])(implicit flash: Flash)
 
 @import helper._
 @admin.adminMain("Welcome to Play", user) {

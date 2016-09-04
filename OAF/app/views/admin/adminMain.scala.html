@@ -1,4 +1,4 @@
-@(title: String, user: User)(content: Html)
+@(title: String, user: User, currentForm: Option[Form[AnyRef]] = None)(content: Html)(implicit flash: Flash)
 @import play.api.i18n.Messages.Message
 
 @main("Welcome to Play") {
@@ -48,6 +48,28 @@
 
         <div id="page-wrapper">
             <div class="container-fluid">
+                @flash.get("success") match {
+                    case Some(message) => {
+                        <div class="alert alert-info">
+                            <a class="close" data-dismiss="alert">x</a>
+                            @Html(message)
+                        </div>
+                    }
+                    case _ => { }
+                }
+                @if(currentForm.isDefined){
+                    @if(currentForm.get.hasErrors) {
+                        <div class="alert alert-danger">
+                            <a class="close" data-dismiss="alert">x</a>
+                            @if(currentForm.get.errors.size > 0) {
+                                @for(error <- currentForm.get.errors) {
+                                    @error.message
+                                    <br>
+                                }
+                            } else {No error returned.}
+                        </div>
+                    }
+                }
                 @content
              </div>
         </div>

@@ -29,4 +29,8 @@ object CompanyDAO extends BaseDAO[CompanyDBModel,Long, Session]{
     (companies returning companies.map(_.id)) += model
   }
 
+  def findByName(name: String)(implicit session: Session): Option[CompanyDBModel] = {
+    companies.filter(_.name === name).firstOption
+  }
+
 }
