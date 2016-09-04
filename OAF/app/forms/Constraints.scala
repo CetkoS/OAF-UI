@@ -20,7 +20,7 @@ object Constraints {
         Invalid("Password must have atleast 8 charachters")
   }
 
-  def checkUsernameUnique(implicit session: Session) = Constraint[String] {
+  def checkUsernameUnique = Constraint[String] {
     username: String => {
       UserService.findByUsername(username) match {
         case Some(user) => Invalid("User with this username " + username + "already exists.")

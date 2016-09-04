@@ -15,7 +15,7 @@ case class CreateEmployeeData
 )
 
 object CreateEmployeeForm {
-  def getCreateEmployeeData(implicit session: Session) = Form(
+  def getCreateEmployeeData = Form(
       mapping(
         "firstName" -> nonEmptyText,
         "lastName" -> nonEmptyText,

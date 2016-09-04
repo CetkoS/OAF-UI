@@ -19,7 +19,7 @@ case class CreateCompanyData
 )
 
 object CreateCompanyForm {
-  def getCreateCompanyData(implicit session: Session) = Form(
+  def getCreateCompanyData = Form(
       mapping(
         "name" -> nonEmptyText,
         "description" -> nonEmptyText,

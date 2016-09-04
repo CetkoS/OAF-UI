@@ -21,7 +21,7 @@ case class EditCompanyData
 )
 
 object EditCompanyForm {
-  def getEditCompanyData(implicit session: Session) = Form(
+  def getEditCompanyData = Form(
       mapping(
         "name" -> nonEmptyText,
         "description" -> nonEmptyText,

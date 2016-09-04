@@ -17,7 +17,7 @@ case class CreateArticleData
 )
 
 object CreateArticleForm {
-  def getCreateArticleData(implicit session: Session) = Form(
+  def getCreateArticleData = Form(
       mapping(
         "name" -> nonEmptyText,
         "description" -> optional(text),

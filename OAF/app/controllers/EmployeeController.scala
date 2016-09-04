@@ -1,5 +1,6 @@
 package controllers
 
+import com.oaf.dal.enums.Role.Administrator
 import forms.admin.{CreateEmployeeForm, EditEmployeeForm}
 import models.User
 import play.api.Logger
@@ -9,8 +10,8 @@ import services.UserService
 
 class EmployeeController extends BaseController {
 
-  def getAll = DBAction { implicit request =>
-    val user = UserService.findById(1) //@todo logged in user
+  def getAll = StackAction(AuthorityKey -> Administrator) { implicit request =>
+    val user = UserService.findById(loggedIn.id.get) //@todo logged in user
     val employees = user.get.companyId match {
       case Some(companyId) => Some(UserService.findAllEmployees(companyId))
       case _ => None
@@ -18,18 +19,16 @@ class EmployeeController extends BaseController {
     Ok(views.html.admin.employees(user.get,employees))
   }
 
-  def showEditPage(userId: String) = DBAction { implicit request =>
-    val loggedInUser = UserService.findById(1)
+  def showEditPage(userId: String) = StackAction(AuthorityKey -> Administrator) { implicit request =>
     val employee = UserService.findById(userId.toInt)
-        Ok(views.html.admin.employeeEdit(loggedInUser.get, employee.get))
+        Ok(views.html.admin.employeeEdit(loggedIn, employee.get))
   }
 
-  def showCreatePage() = DBAction { implicit request =>
-    val loggedInUser = UserService.findById(1)
-    Ok(views.html.admin.employeeCreate(loggedInUser.get))
+  def showCreatePage() = StackAction(AuthorityKey -> Administrator) { implicit request =>
+    Ok(views.html.admin.employeeCreate(loggedIn))
   }
 
-  def update() = DBAction { implicit request =>
+  def update() = StackAction(AuthorityKey -> Administrator) { implicit request =>
     EditEmployeeForm.getEditEmployeeData.bindFromRequest.fold(
       formWithErrors => {
         Logger.info("UsaoErr");
@@ -42,10 +41,9 @@ class EmployeeController extends BaseController {
     )
   }
 
-  def create() = DBAction { implicit request =>
+  def create() = StackAction(AuthorityKey -> Administrator) { implicit request =>
     CreateEmployeeForm.getCreateEmployeeData.bindFromRequest.fold(
       formWithErrors => {
-        Logger.info("UsaoErr");
         Ok("Err" + formWithErrors)
       },
       createEmployeeData => {
@@ -55,7 +53,7 @@ class EmployeeController extends BaseController {
     )
   }
 
-  def delete(employeeId: String) = DBAction { implicit request =>
+  def delete(employeeId: String) = StackAction(AuthorityKey -> Administrator) { implicit request =>
     UserService.delete(employeeId.toInt)
     Ok("Deleted")
   }

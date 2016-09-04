@@ -8,9 +8,11 @@ import play.api.mvc.Results._
 
 import jp.t2v.lab.play2.auth._
 import play.api.mvc._
+import services.UserService
 
 import scala.concurrent.{Future, ExecutionContext}
 import scala.reflect.{ClassTag, classTag}
+import play.api.Play.current
 
 trait AuthConfigImpl extends AuthConfig {
 
@@ -24,7 +26,7 @@ trait AuthConfigImpl extends AuthConfig {
     * A type that represents a user in your application.
     * `User`, `Account` and so on.
     */
-  type User = UserDBModel
+  type User = models.User
 
   /**
     * A type that is defined by every action for authorization.
@@ -51,25 +53,29 @@ trait AuthConfigImpl extends AuthConfig {
     * A function that returns a `User` object from an `Id`.
     * You can alter the procedure to suit your application.
     */
-  def resolveUser(id: Id)(implicit ctx: ExecutionContext): Future[Option[User]] = ??? //Account.findById(id)
+  def resolveUser(id: Id)(implicit ctx: ExecutionContext): Future[Option[User]] =
+    Future.successful(
+        UserService.findByUsername(id)
+    )
 
   /**
     * Where to redirect the user after a successful login.
     */
-  def loginSucceeded(request: RequestHeader)(implicit ctx: ExecutionContext): Future[Result] = ???
-//    Future.successful(Redirect(routes.Message.main))
-
+  def loginSucceeded(request: RequestHeader)(implicit ctx: ExecutionContext): Future[Result] = {
+    val uri = request.session.get("access_uri").getOrElse(routes.CompanyController.get.url.toString)
+    Future.successful(Redirect(uri).withSession(request.session - "access_uri"))
+  }
   /**
     * Where to redirect the user after logging out
     */
   def logoutSucceeded(request: RequestHeader)(implicit ctx: ExecutionContext): Future[Result] =
-    Future.successful(Redirect(routes.Application.login))
+    Future.successful(Redirect(routes.RegistrationController.showLogin))
 
   /**
     * If the user is not logged in and tries to access a protected resource then redirect them as follows:
     */
   def authenticationFailed(request: RequestHeader)(implicit ctx: ExecutionContext): Future[Result] =
-    Future.successful(Redirect(routes.Application.login))
+    Future.successful(Redirect(routes.RegistrationController.showLogin))
 
   /**
     * If authorization failed (usually incorrect password) redirect the user as follows:
@@ -77,6 +83,13 @@ trait AuthConfigImpl extends AuthConfig {
   override def authorizationFailed(request: RequestHeader, user: User, authority: Option[Authority])(implicit context: ExecutionContext): Future[Result] = {
     Future.successful(Forbidden("no permission"))
   }
+
+  /**
+    * This method is kept for compatibility.
+    * It will be removed in a future version
+    */
+  def authorizationFailed(request: RequestHeader)(implicit ctx: ExecutionContext): Future[Result] = throw new AssertionError
+
 
   /**
     * A function that determines what `Authority` a user has.

@@ -17,7 +17,7 @@ case class EditArticleData
 )
 
 object EditArticleForm {
-  def getEditArticleData(implicit session: Session) = Form(
+  def getEditArticleData = Form(
       mapping(
         "articleId" -> longNumber,
         "name" -> nonEmptyText,

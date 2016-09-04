@@ -16,7 +16,7 @@ case class EditEmployeeData
 )
 
 object EditEmployeeForm {
-  def getEditEmployeeData(implicit session: Session) = Form(
+  def getEditEmployeeData = Form(
       mapping(
         "firstName" -> nonEmptyText,
         "lastName" -> nonEmptyText,

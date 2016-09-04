@@ -3,19 +3,26 @@ package services
 import com.oaf.dal.dal.AddressDAO
 import models.Address
 import play.api.db.slick._
+import play.api.Play.current
 
 object AddressService {
 
-  def findById(id: Long)(implicit session: Session): Option[Address] = {
-    AddressDAO.findById(id).map(u => u)
+  def findById(id: Long): Option[Address] = {
+    play.api.db.slick.DB.withTransaction { implicit session =>
+      AddressDAO.findById(id).map(u => u)
+    }
   }
 
-  def update(id: Long, address: Address)(implicit session: Session): Unit = {
-    AddressDAO.update(id, address)
+  def update(id: Long, address: Address): Unit = {
+    play.api.db.slick.DB.withTransaction { implicit session =>
+      AddressDAO.update(id, address)
+    }
   }
 
-  def delete(id: Long)(implicit session: Session): Unit = {
-    AddressDAO.delete(id)
+  def delete(id: Long): Unit = {
+    play.api.db.slick.DB.withTransaction { implicit session =>
+      AddressDAO.delete(id)
+    }
   }
 
 }

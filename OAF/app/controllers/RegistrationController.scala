@@ -1,15 +1,18 @@
 package controllers
 
-import com.oaf.dal.enums.{UserRole, UserStatus}
 import forms.{LoginForm, RegistrationForm}
-import models.User
+import jp.t2v.lab.play2.auth.{AuthElement, LoginLogout}
 import play.api.Logger
 import play.api.db.slick.DBAction
+import play.api.mvc.{Action, Controller}
 import services.{RegistrationService, UserService}
 import play.api.Play.current
 import play.api.db.slick._
+import scala.concurrent.ExecutionContext.Implicits.global
 
-class RegistrationController extends BaseController {
+import scala.concurrent.Future
+
+class RegistrationController extends AuthConfigImpl with Controller with LoginLogout with AuthElement {
 
   def showRegistration = DBAction { implicit request =>
     Ok(views.html.registration.registration(RegistrationForm.getRegisterData))
@@ -33,20 +36,24 @@ class RegistrationController extends BaseController {
     Ok("Login")
   }
 
+  def logout = Action.async { implicit request =>
+    gotoLogoutSucceeded
+  }
+
   def showLogin = DBAction { implicit request =>
     Ok(views.html.registration.login(LoginForm.getLoginData))
   }
 
-  def authenticate = DBAction { implicit request =>
-    LoginForm.getLoginData.bindFromRequest.fold(
-      formWithErrors => {
-        Logger.info("UsaoErr");
-        Ok("Error" + formWithErrors)
-      },
-      loginData => {
-        //open admin or employee page
-        Ok("Successfuly login")
-      }
-    )
+  def authenticate = Action.async { implicit request =>
+    play.api.db.slick.DB.withTransaction { implicit session =>
+      LoginForm.getLoginData.bindFromRequest.fold(
+        errors => Future.successful(BadRequest(views.html.login(errors))),
+        loginData => {
+          UserService.findByUsername(loginData.username) map { user =>
+            gotoLoginSucceeded(user.username)
+          } getOrElse (Future.successful(BadRequest("Wrong login")))
+        }
+      )
+    }
   }
 }
