@@ -1,0 +1,27 @@
+@(user: User, additive: Additive, additiveForm: Option[Form[AnyRef]] = None)(implicit flash: Flash)
+
+@import helper._
+@admin.adminMain("Welcome to Play", user, additiveForm) {
+    <h1 class="page-header">
+        Edit Additive
+    </h1>
+
+    <div class="col-lg-7">
+        <h3 class="page-header">
+            Basic info
+        </h3>
+        @helper.form(action = routes.AdditiveController.update()){
+            <input name="additiveId" value=@additive.id.get class="form-control" type="hidden">
+            <input name="companyId" value=@user.companyId.get class="form-control" type="hidden">
+            <div class="form-group">
+                <label>Name</label>
+                <input name="name" class="form-control" value="@additive.name" readonly>
+            </div>
+            <div class="form-group">
+                <label>Description</label>
+                <textarea name="description" class="form-control" rows="3">@additive.description</textarea>
+            </div>
+            <input type="submit" class="btn btn-default" value="Update">
+        }
+    </div>
+}

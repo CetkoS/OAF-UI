@@ -4,7 +4,7 @@ import play.api.data.validation.Constraint
 import play.api.data.validation.Invalid
 import play.api.data.validation.Valid
 import play.api.db.slick.Session
-import services.{ArticleService, CompanyService, UserService}
+import services.{AdditiveService, ArticleService, CompanyService, UserService}
 
 object Constraints {
 
@@ -44,6 +44,13 @@ object Constraints {
 
   def checkArticleNameUnique(name: String, companyId: Long): Boolean = {
     ArticleService.findByNameAndCompany(name, companyId) match {
+      case None => true
+      case _ => false
+    }
+  }
+
+  def checkAdditiveNameUnique(name: String, companyId: Long): Boolean = {
+    AdditiveService.findByNameAndCompany(name, companyId) match {
       case None => true
       case _ => false
     }

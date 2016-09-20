@@ -29,7 +29,13 @@ GET    /admin/articles/:articleId     @controllers.ArticleController.showEditPag
 POST   /admin/articles/create         @controllers.ArticleController.create
 POST   /admin/article/edit            @controllers.ArticleController.update
 POST   /admin/article/:articleId      @controllers.ArticleController.delete(articleId)
-
+#Admin Additive
+GET    /admin/additives                @controllers.AdditiveController.getAll
+GET    /admin/additives/create         @controllers.AdditiveController.showCreatePage
+GET    /admin/additives/:additiveId    @controllers.AdditiveController.showEditPage(additiveId)
+POST   /admin/additives/create         @controllers.AdditiveController.create
+POST   /admin/additive/edit            @controllers.AdditiveController.update
+POST   /admin/additive/:additiveId     @controllers.AdditiveController.delete(additiveId)
 
 
 # Map static resources from the /public folder to the /assets URL path
