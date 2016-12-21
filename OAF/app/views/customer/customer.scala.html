@@ -1,0 +1,12 @@
+@(companies: List[Company])(implicit flash: Flash)
+
+@import helper._
+@customerMain("Welcome to Play") {
+
+    @for(company <- companies){
+        <div>
+            @company.name
+        </div>
+    }
+
+}

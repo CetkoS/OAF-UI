@@ -9,6 +9,12 @@ import play.api.Play.current
 
 object CompanyService {
 
+  def findAll: List[Company] = {
+    play.api.db.slick.DB.withTransaction { implicit session =>
+      CompanyDAO.findAll.map(company => Company.convertToModel(company))
+    }
+  }
+
   def findById(id: Long): Option[Company] = {
     play.api.db.slick.DB.withTransaction { implicit session =>
       CompanyDAO.findById(id).map(u => u)

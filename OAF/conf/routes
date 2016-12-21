@@ -36,7 +36,8 @@ GET    /admin/additives/:additiveId    @controllers.AdditiveController.showEditP
 POST   /admin/additives/create         @controllers.AdditiveController.create
 POST   /admin/additive/edit            @controllers.AdditiveController.update
 POST   /admin/additive/:additiveId     @controllers.AdditiveController.delete(additiveId)
-
+#Customer
+GET    /customer                       @controllers.CustomerController.getAll
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
