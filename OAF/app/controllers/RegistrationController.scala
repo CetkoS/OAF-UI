@@ -1,5 +1,7 @@
 package controllers
 
+import com.oaf.dal.enums.Role.{Employee, Customer}
+import com.oaf.dal.enums.UserRole
 import forms.{LoginForm, RegistrationForm}
 import jp.t2v.lab.play2.auth.{AuthElement, LoginLogout}
 import play.api.Logger
@@ -21,7 +23,6 @@ class RegistrationController extends AuthConfigImpl with Controller with LoginLo
   def registration = DBAction { implicit request =>
     RegistrationForm.getRegisterData.bindFromRequest.fold(
       formWithErrors => {
-        Logger.info("UsaoErr");
         Ok(views.html.registration.registration(formWithErrors))
       },
       registerData => {
@@ -54,6 +55,15 @@ class RegistrationController extends AuthConfigImpl with Controller with LoginLo
           } getOrElse (Future.successful(BadRequest("Wrong login")))
         }
       )
+    }
+  }
+
+  def get = StackAction(AuthorityKey -> Employee) { implicit request =>
+    val user = loggedIn
+    user.role match {
+      case UserRole.Administrator => Redirect(routes.CompanyController.get())
+      case UserRole.Employee => Redirect(routes.EmployeeController.employeeStartPage())
+      case UserRole.Customer => Redirect(routes.CustomerController.getAll())
     }
   }
 }

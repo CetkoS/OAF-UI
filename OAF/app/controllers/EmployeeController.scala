@@ -1,15 +1,18 @@
 package controllers
 
-import com.oaf.dal.enums.Role.Administrator
+import com.oaf.dal.enums.Role.{Employee, Administrator}
+import forms.CreateCompanyForm
 import forms.admin.{CreateEmployeeForm, EditEmployeeForm}
 import models.User
 import play.api.Logger
 import play.api.Play.current
 import play.api.data.Form
 import play.api.db.slick.{DBAction, _}
-import services.UserService
+import services.{AddressService, CompanyService, UserService}
 
 class EmployeeController extends BaseController {
+
+  /*Actions for the Admin page */
 
   def getAll = StackAction(AuthorityKey -> Administrator) { implicit request =>
     val user = UserService.findById(loggedIn.id.get) //@todo logged in user
@@ -59,5 +62,18 @@ class EmployeeController extends BaseController {
     UserService.delete(employeeId.toInt)
     Redirect(routes.EmployeeController.getAll()).flashing("success" -> "Employee successfully deleted.")
   }
+
+  /*Actions for the Employee page */
+
+  def employeeStartPage() = StackAction(AuthorityKey -> Employee) { implicit request =>
+    val user = loggedIn
+    val company = user.companyId match {
+      case Some(id) => CompanyService.findById(id)
+      case _ => None
+    }
+
+    Ok(views.html.employee.employee(user, company.get))
+  }
+
 
 }
