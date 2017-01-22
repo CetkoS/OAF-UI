@@ -2,7 +2,6 @@ package com.oaf.dal.dal
 
 import com.oaf.dal.enums.AdditiveStatus
 import com.oaf.dal.models._
-import models.AdditiveDBModel
 import play.api.db.slick.Config.driver.simple._
 import play.api.db.slick.Session
 

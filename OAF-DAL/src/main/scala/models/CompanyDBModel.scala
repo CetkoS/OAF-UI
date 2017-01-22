@@ -1,4 +1,5 @@
-package models
+package com.oaf.dal.models
+
 
 import scala.slick.lifted.Tag
 import play.api.db.slick.Config.driver.simple._

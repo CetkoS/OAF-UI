@@ -1,6 +1,7 @@
 package models
 
 import com.oaf.dal.enums.ArticleStatus
+import com.oaf.dal.models.ArticleDBModel
 
 case class Article
 (

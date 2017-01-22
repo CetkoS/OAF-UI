@@ -1,5 +1,7 @@
 package models
 
+import com.oaf.dal.models.AddressDBModel
+
 case class Address
 (
   id: Option[Long],

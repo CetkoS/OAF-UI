@@ -1,0 +1,54 @@
+@(article: Article, additives: List[Additive], orderFull: Option[OrderFull])(implicit flash: Flash)
+
+@import helper._
+@customerMain("Welcome to Play", orderFull) {
+    @helper.form(action = routes.CustomerController.addToCart()){
+        <div class="row">
+            <input name="articleId" value=@article.id class="form-control" type="hidden">
+            <input name="companyId" value=@article.companyId class="form-control" type="hidden">
+            <div class="col-lg-12">
+                <h1 class="page-header">@article.name</h1>
+            </div>
+            <div class="col-lg-3">
+                <div class="form-group">
+                    <label>Description</label>
+                    <div class="text-area indent-element form-control">
+                        @article.description
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Weight</label>
+                    <div class="text-area indent-element form-control">
+                        @article.weight
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Price</label>
+                    <div class="text-area indent-element form-control">
+                        @article.price
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-9">
+                <h4 class="header-panel">Additives</h4>
+                @if(additives.size > 0) {
+                            @for(additive <- additives){
+                                <div class="checkbox indent-element">
+                                <label><input type="checkbox" name="additive[@additive.id]" value="@additive.id">@additive.name</label>
+                                    </div>
+                            }
+                } else {
+                    No aviableble additives
+                    <hr/>
+                }
+            </div>
+            <hr class="hr-line">
+            <div class="col-sm-5">
+                <a href="@routes.CustomerController.getCompany(article.companyId.toString)" class="btn btn-primary" role="button">Back</a>
+                <input type="submit" class="btn btn-warning align-right" value="Add to chart">
+            </div>
+        </div>
+    }
+}

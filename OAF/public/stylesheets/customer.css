@@ -1,0 +1,22 @@
+.clickable-row {
+}
+.indent-element {
+    padding-left: 20px;
+}
+.align-right {
+    float: right;
+}
+.align-center {
+    align-items: center;
+}
+.hr-line {
+    width:100%;
+    margin-bottom: 5px;
+}
+.total-price {
+    width: 100%;
+    padding: 15px 15px 15px 15px;
+    color: #9d9d9d;
+    line-height: 25px;
+    border-top:#9d9d9d dashed 1px;
+}

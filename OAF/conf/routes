@@ -38,7 +38,11 @@ POST   /admin/additives/create         @controllers.AdditiveController.create
 POST   /admin/additive/edit            @controllers.AdditiveController.update
 POST   /admin/additive/:additiveId     @controllers.AdditiveController.delete(additiveId)
 #Customer
-GET    /customer                       @controllers.CustomerController.getAll
+GET    /                               @controllers.CustomerController.getAll
+GET    /company/:companyId             @controllers.CustomerController.getCompany(companyId)
+GET    /article/:articleId             @controllers.CustomerController.getArticle(articleId)
+POST   /article/addtocart              @controllers.CustomerController.addToCart()
+
 #Employee
 GET    /employee                       @controllers.EmployeeController.employeeStartPage
 

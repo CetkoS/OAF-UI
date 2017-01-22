@@ -1,6 +1,7 @@
 package models
 
 import com.oaf.dal.enums.AdditiveStatus
+import com.oaf.dal.models.AdditiveDBModel
 
 case class Additive
 (

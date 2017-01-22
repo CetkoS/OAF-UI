@@ -1,4 +1,4 @@
-package models
+package com.oaf.dal.models
 
 import com.oaf.dal.enums.ArticleStatus
 

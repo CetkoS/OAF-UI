@@ -1,5 +1,7 @@
 package models
 
+import com.oaf.dal.models.CompanyDBModel
+
 case class Company
 (
   id: Option[Long],

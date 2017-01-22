@@ -86,7 +86,7 @@ object UserService {
 
   def createEmployee(createEmployeeData: CreateEmployeeData): Long = {
     val employee = User(None, createEmployeeData.firstName, createEmployeeData.lastName, createEmployeeData.username,
-      UserStatus.Invited, Some(createEmployeeData.companyId), UserRole.Employee,"employee123", createEmployeeData.email)
+      UserStatus.Invited, Some(createEmployeeData.companyId), UserRole.Employee, BCrypt.hashpw("employee123", BCrypt.gensalt()), createEmployeeData.email)
     val userId = UserService.create(employee)
     //Send email
     userId
