@@ -45,4 +45,22 @@ object CustomerService {
     }
   }
 
+  def deleteFullOrder(companyId: Long, sessionId: String): Unit = {
+    play.api.db.slick.DB.withTransaction { implicit session =>
+      getFullOrderBySessionId(companyId, sessionId) match {
+        case None => None
+        case Some(order) => {
+          order.orderedArticles.map(article => OrderedArticleDAO.delete(article.id.get))
+          OrderDAO.delete(order.orderInfo.id.get)
+        }
+      }
+    }
+  }
+
+  def deleteOrderedArticle(artcleId: Long): Unit = {
+    play.api.db.slick.DB.withTransaction { implicit session =>
+      OrderedArticleDAO.delete(artcleId)
+    }
+  }
+
 }

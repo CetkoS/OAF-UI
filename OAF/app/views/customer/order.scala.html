@@ -1,0 +1,12 @@
+@(orderFull: OrderFull)(implicit flash: Flash)
+
+@import helper._
+@customerMain("Welcome to Play", Some(orderFull)) {
+    @helper.form(action = routes.CustomerController.addToCart()){
+        <div class="row">
+            <div class="col-sm-5">
+                <input type="submit" class="btn btn-warning align-right" value="Add to chart">
+            </div>
+        </div>
+    }
+}

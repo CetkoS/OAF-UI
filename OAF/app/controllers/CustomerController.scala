@@ -1,6 +1,7 @@
 package controllers
 
 import forms.customer.AddToCartForm
+import play.api.Logger
 import play.api.mvc.Action
 import services.{CustomerService, AdditiveService, CompanyService, ArticleService}
 
@@ -9,6 +10,18 @@ class CustomerController extends BaseController {
   def getAll = Action { implicit request =>
     val companies = CompanyService.findAll
     Ok(views.html.customer.customer(companies)).withNewSession
+  }
+
+  def backToCompanies(companyId: String) = Action { implicit request =>
+    companyId match {
+      case "0" => Redirect(routes.CustomerController.getAll())
+      case _ => Redirect(routes.CustomerController.getCompany(companyId)).flashing("leaving-page-modal"->"true")
+    }
+  }
+
+  def deletePendingOrder(companyId: String) = Action {implicit request =>
+    CustomerService.deleteFullOrder(companyId.toLong,request.session.get("session-id").getOrElse(""))
+    Redirect(routes.CustomerController.getAll()).withNewSession
   }
 
   def getCompany(companyId: String) = Action { implicit request =>
@@ -53,5 +66,19 @@ class CustomerController extends BaseController {
         }
       }
     )
+  }
+
+  def getOrder(companyId: String) = Action {implicit request =>
+    val sessionId = request.session.get("session-id").get
+    val orderFull = CustomerService.getFullOrderBySessionId(companyId.toLong, sessionId).get
+    Ok(views.html.customer.order(orderFull))
+  }
+
+  def deleteOrderedArticle(companyId: String) = Action {implicit request =>
+    Logger.info(request.body.asFormUrlEncoded + "")
+    val articleId = request.body.asFormUrlEncoded.get("articleId")(0).toLong
+    Ok(articleId + " ")
+    CustomerService.deleteOrderedArticle(articleId)
+    Redirect(routes.CustomerController.getCompany(companyId))
   }
 }

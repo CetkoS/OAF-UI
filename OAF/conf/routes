@@ -42,6 +42,10 @@ GET    /                               @controllers.CustomerController.getAll
 GET    /company/:companyId             @controllers.CustomerController.getCompany(companyId)
 GET    /article/:articleId             @controllers.CustomerController.getArticle(articleId)
 POST   /article/addtocart              @controllers.CustomerController.addToCart()
+GET    /back/:companyId                @controllers.CustomerController.backToCompanies(companyId)
+POST    /deletePendingOrder/:companyId  @controllers.CustomerController.deletePendingOrder(companyId)
+POST    /deleteOrderedArticle/:companyId @controllers.CustomerController.deleteOrderedArticle(companyId)
+GET     /order/:companyId                 @controllers.CustomerController.getOrder(companyId)
 
 #Employee
 GET    /employee                       @controllers.EmployeeController.employeeStartPage
