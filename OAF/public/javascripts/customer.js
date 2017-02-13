@@ -11,3 +11,15 @@ $(document).on("click", ".open-deleteArticleDialog", function () {
     // it is superfluous to have to manually call the modal.
     // $('#addBookDialog').modal('show');
 });
+
+$(document).on("change", ".delivery", function () {
+    if($(this).val() != "No"){
+        $('#address').removeClass('invisible');
+        $('#address').addClass('address-div');
+        $("#addressLine").prop('required',true);
+    } else {
+        $('#address').addClass('invisible');
+        $('#address').removeClass('address-div');
+        $("#addressLine").prop('required',false);
+    }
+});

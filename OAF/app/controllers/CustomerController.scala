@@ -1,6 +1,6 @@
 package controllers
 
-import forms.customer.AddToCartForm
+import forms.customer.{SubmitOrderForm, AddToCartForm}
 import play.api.Logger
 import play.api.mvc.Action
 import services.{CustomerService, AdditiveService, CompanyService, ArticleService}
@@ -75,10 +75,20 @@ class CustomerController extends BaseController {
   }
 
   def deleteOrderedArticle(companyId: String) = Action {implicit request =>
-    Logger.info(request.body.asFormUrlEncoded + "")
     val articleId = request.body.asFormUrlEncoded.get("articleId")(0).toLong
-    Ok(articleId + " ")
     CustomerService.deleteOrderedArticle(articleId)
     Redirect(routes.CustomerController.getCompany(companyId))
+  }
+
+  def submitOrder() = Action { implicit  request =>
+    SubmitOrderForm.getSubmitOrderData.bindFromRequest.fold(
+      formWithErrors => {
+        BadRequest("ERROR" + formWithErrors)
+      },
+      submitOrderData => {
+        CustomerService.submitOrder(submitOrderData)
+        Redirect(routes.CustomerController.getCompany(submitOrderData.companyId.toString())).flashing("success" -> "Your order is successfully sent!")
+        }
+    )
   }
 }

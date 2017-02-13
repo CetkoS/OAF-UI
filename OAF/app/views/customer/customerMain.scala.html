@@ -1,9 +1,10 @@
-@(title: String, orderFull: Option[OrderFull] = None, currentForm: Option[Form[AnyRef]] = None)(content: Html)(implicit flash: Flash)
+@(title: String, orderFull: Option[OrderFull] = None, companyId: Option[String] = None, currentForm: Option[Form[AnyRef]] = None)(content: Html)(implicit flash: Flash)
 @import play.api.i18n.Messages.Message
 
 @main("Welcome to Play") {
-    <div id="wrapper">
+
         @if(orderFull.isDefined){
+            <div id="wrapper">
             <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
@@ -11,9 +12,9 @@
                         <span class="glyphicon glyphicon-shopping-cart" style="color: #9d9d9d"></span>
                     </button>
                     @if(orderFull.isDefined){
-                        <a class="navbar-brand" href="@routes.CustomerController.backToCompanies(orderFull.get.orderInfo.companyId.toString())">Back to companies</a>
+                        <a class="navbar-brand" href="@routes.CustomerController.backToCompanies(orderFull.get.orderInfo.companyId.toString())"><span class="glyphicon glyphicon-arrow-left"></span>&nbsp; Back to companies</a>
                     } else {
-                        <a class="navbar-brand" href="@routes.CustomerController.backToCompanies("0")">Back to companies</a>
+                        <a class="navbar-brand" href="@routes.CustomerController.backToCompanies("0")"><span class="glyphicon glyphicon-arrow-left"></span>&nbsp; Back to companies</a>
                     }
                 </div>
                 <div class="collapse navbar-collapse navbar-ex1-collapse">
@@ -42,6 +43,21 @@
                     </ul>
                 </div>
             </nav>
+        } else {
+            <div>
+                <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="glyphicon glyphicon-shopping-cart" style="color: #9d9d9d"></span>
+                        </button>
+                        @if(companyId.isDefined){
+                            <a class="navbar-brand" href="@routes.CustomerController.getCompany(companyId.get)"><span class="glyphicon glyphicon-arrow-left"></span>&nbsp; Back to articles</a>
+                        } else {
+                            <a class="navbar-brand" href="@routes.CustomerController.backToCompanies("0")"><span class="glyphicon glyphicon-arrow-left"></span>&nbsp; Back to companies</a>
+                        }
+                    </div>
+                </nav>
         }
 
         <div id="page-wrapper">
@@ -89,10 +105,10 @@
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                    <h4 class="modal-title">Modal Header</h4>
+                                    <h4 class="modal-title">Delete</h4>
                                 </div>
                                 <div class="modal-body">
-                                    <p>Some text in the modal.</p>
+                                    <p>Are you sure you want to delete selected article?</p>
                                 </div>
                                 <div class="modal-footer">
                                     <input type="hidden" name="articleId" id="articleId" value=""/>

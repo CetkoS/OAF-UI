@@ -2,7 +2,7 @@ package services
 
 import com.oaf.dal.dal.{OrderedArticleDAO, OrderDAO}
 import com.oaf.dal.enums.{PaymentMethodEnum, DeliveryEnum, OrderStatus}
-import forms.customer.AddToCartData
+import forms.customer.{SubmitOrderData, AddToCartData}
 import models.{OrderFull, OrderedArticle, Order}
 import play.api.Play.current
 
@@ -12,7 +12,7 @@ object CustomerService {
 
   def createPendingOrder(sessionId: String, companyId: Long): Long = {
     play.api.db.slick.DB.withTransaction { implicit session =>
-      val order = Order(None, OrderStatus.Pending, "", DeliveryEnum.No, PaymentMethodEnum.Cache, "", sessionId, None, companyId)
+      val order = Order(None, OrderStatus.Pending, "", DeliveryEnum.No, PaymentMethodEnum.Cash, "", sessionId, None, companyId)
       OrderDAO.create(order)
     }
   }
@@ -62,5 +62,25 @@ object CustomerService {
       OrderedArticleDAO.delete(artcleId)
     }
   }
+
+  def submitOrder(orderData: SubmitOrderData): Unit = {
+    play.api.db.slick.DB.withTransaction { implicit session =>
+          OrderDAO.findById(orderData.orderId) match {
+            case None => throw new IllegalArgumentException()
+            case Some(oldOrder) => {
+              val newOrder = Order( oldOrder.id,
+                OrderStatus.PendingApproval,
+                orderData.customerName,
+                DeliveryEnum.withName(orderData.delivery),
+                PaymentMethodEnum.withName(orderData.paymentMethod),
+                orderData.phoneNumber,
+                oldOrder.sessionId,
+                orderData.addressLine,
+                orderData.companyId)
+              OrderDAO.update(orderData.orderId, newOrder)
+            }
+          }
+      }
+    }
 
 }

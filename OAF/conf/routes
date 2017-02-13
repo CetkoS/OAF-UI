@@ -46,6 +46,7 @@ GET    /back/:companyId                @controllers.CustomerController.backToCom
 POST    /deletePendingOrder/:companyId  @controllers.CustomerController.deletePendingOrder(companyId)
 POST    /deleteOrderedArticle/:companyId @controllers.CustomerController.deleteOrderedArticle(companyId)
 GET     /order/:companyId                 @controllers.CustomerController.getOrder(companyId)
+POST    /order                          @controllers.CustomerController.submitOrder()
 
 #Employee
 GET    /employee                       @controllers.EmployeeController.employeeStartPage
