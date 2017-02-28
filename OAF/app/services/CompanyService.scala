@@ -30,7 +30,7 @@ object CompanyService {
   def update(editCompanyData: EditCompanyData): Unit = {
     play.api.db.slick.DB.withTransaction { implicit session =>
       val company = Company(Some(editCompanyData.companyId), editCompanyData.name, editCompanyData.description, editCompanyData.addressId,
-        editCompanyData.logoUrl, editCompanyData.phoneNumber, editCompanyData.ownerId)
+        "public/images/" + editCompanyData.name + "/" + "logo", editCompanyData.phoneNumber, editCompanyData.ownerId)
 
       CompanyDAO.update(company.id.get, company)
 
@@ -52,7 +52,7 @@ object CompanyService {
       val address = Address(None, companyData.addressLine, companyData.city, companyData.postalCode, companyData.country)
       val addressId = AddressDAO.create(address)
 
-      val company = Company(None, companyData.name, companyData.description, addressId, companyData.logoUrl,
+      val company = Company(None, companyData.name, companyData.description, addressId, "public/images/" + companyData.name + "/" + "logo",
         companyData.phoneNumber, companyData.ownerId)
       val companyId = CompanyDAO.create(company)
 

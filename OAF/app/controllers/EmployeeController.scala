@@ -3,12 +3,13 @@ package controllers
 import com.oaf.dal.enums.Role.{Employee, Administrator}
 import forms.CreateCompanyForm
 import forms.admin.{CreateEmployeeForm, EditEmployeeForm}
+import forms.employee.AcceptOrderForm
 import models.User
 import play.api.Logger
 import play.api.Play.current
 import play.api.data.Form
 import play.api.db.slick.{DBAction, _}
-import services.{AddressService, CompanyService, UserService}
+import services.{EmployeeService, AddressService, CompanyService, UserService}
 
 class EmployeeController extends BaseController {
 
@@ -66,14 +67,48 @@ class EmployeeController extends BaseController {
   /*Actions for the Employee page */
 
   def employeeStartPage() = StackAction(AuthorityKey -> Employee) { implicit request =>
-    val user = loggedIn
-    val company = user.companyId match {
+    Redirect(routes.EmployeeController.getOrders("New"))
+  }
+
+  def getOrders(status: String) = StackAction(AuthorityKey -> Employee) { implicit request =>
+    val employee = loggedIn
+    val company = employee.companyId match {
       case Some(id) => CompanyService.findById(id)
       case _ => None
     }
+    val orders = EmployeeService.getOrdersByStatus(employee.companyId.get, status)
 
-    Ok(views.html.employee.employee(user, company.get))
+    status match {
+      case "New" => Ok(views.html.employee.neworders(orders, employee, company.get))
+      case "Active" => Ok(views.html.employee.activeorders(orders, employee, company.get))
+      case "Ready" => Ok(views.html.employee.readyorders(orders, employee, company.get))
+      case "Completed" => Ok(views.html.employee.completedorders(orders, employee, company.get))
+      case  _ => BadRequest("Error")
+    }
   }
 
+  def getOrderById(id: String) = StackAction(AuthorityKey -> Employee) { implicit request =>
+    val employee = loggedIn
+    val order = EmployeeService.getFullOrdersById(id.toLong)
+    Ok(views.html.employee.order(order, employee))
 
-}
+  }
+
+  def acceptOrder() = StackAction(AuthorityKey -> Employee) { implicit request =>
+    AcceptOrderForm.getAcceptOrderData.bindFromRequest.fold(
+      formWithErrors => {
+        BadRequest("Error Accept Order")
+      },
+      acceptOrderData => {
+        EmployeeService.acceptOrder(acceptOrderData)
+        Redirect(routes.EmployeeController.getOrders("New")).flashing("success" -> "Order accepted.")
+      }
+    )
+  }
+
+  def rejectOrder(id: String) = StackAction(AuthorityKey -> Employee) { implicit request =>
+    EmployeeService.rejectOrder(id.toLong)
+    Redirect(routes.EmployeeController.getOrders("New")).flashing("success" -> "Order rejected.")
+  }
+
+  }

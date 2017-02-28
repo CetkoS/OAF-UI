@@ -1,4 +1,4 @@
-@(orderFull: OrderFull)(implicit flash: Flash)
+@(orderFull: OrderFull)(implicit flash: Flash, lang: Lang)
 
 @import helper._
 @customerMain("Welcome to Play", None, Some(orderFull.orderInfo.companyId.toString())) {
@@ -9,49 +9,49 @@
 
             <div class="col-lg-5">
                 <h3>
-                    Order Information
+                    @Messages("order.information")
                 </h3>
                 <div class="form-group">
-                    <label>Your Name</label>
+                    <label>@Messages("name.your")</label>
                     <input name="customerName" class="form-control" required>
                 </div>
                 <div class="form-group">
-                    <label>Phone Number</label>
+                    <label>@Messages("phoneNumber")</label>
                     <input name="phoneNumber" class="form-control" required>
                 </div>
                 <div class="form-group">
-                    <label>Payment Method</label>
+                    <label>@Messages("paymentMethod")</label>
                     <select name="paymentMethod" class="form-control">
-                        <option class="form-group" value="@com.oaf.dal.enums.PaymentMethodEnum.Cash">@com.oaf.dal.enums.PaymentMethodEnum.Cash</option>
-                        <option class="form-group" value="@com.oaf.dal.enums.PaymentMethodEnum.Card">@com.oaf.dal.enums.PaymentMethodEnum.Card</option>
+                        <option class="form-group" value="@com.oaf.dal.enums.PaymentMethodEnum.Cash">@Messages("payment.cash")</option>
+                        <option class="form-group" value="@com.oaf.dal.enums.PaymentMethodEnum.Card">@Messages("payment.card")</option>
                     </select>
                 </div>
                 <div class="form-group">
-                    <label>Delivery</label>
+                    <label>@Messages("delivery")</label>
                     <select name="delivery" class="delivery form-control">
-                        <option class="form-group" value="@com.oaf.dal.enums.DeliveryEnum.No">@com.oaf.dal.enums.DeliveryEnum.No</option>
-                        <option class="form-group" value="@com.oaf.dal.enums.DeliveryEnum.Company">@com.oaf.dal.enums.DeliveryEnum.Company</option>
-                        <option class="form-group" value="@com.oaf.dal.enums.DeliveryEnum.Taxi">@com.oaf.dal.enums.DeliveryEnum.Taxi</option>
+                        <option class="form-group" value="@com.oaf.dal.enums.DeliveryEnum.No">@Messages("delivery.no")</option>
+                        <option class="form-group" value="@com.oaf.dal.enums.DeliveryEnum.Company">@Messages("delivery.company")</option>
+                        <option class="form-group" value="@com.oaf.dal.enums.DeliveryEnum.Taxi">@Messages("delivery.taxi")</option>
                     </select>
                 </div>
                 <div id="address" class="invisible form-group">
-                    <label>Address line</label>
+                    <label>@Messages("address.addressLine")</label>
                     <input name="addressLine" id="addressLine" class="form-control">
                     <div> &nbsp</div>
                 </div>
             </div>
             <div class="col-lg-7">
                 <h3>
-                    Articles
+                    @Messages("articles")
                 </h3>
                 @if(orderFull.orderedArticles.size > 0) {
                     <div class="table-responsive">
                         <table class="table table-hover table-striped">
                             <thead>
                                 <tr>
-                                    <th>Name</th>
-                                    <th>Additives</th>
-                                    <th>Price</th>
+                                    <th>@Messages("name")</th>
+                                    <th>@Messages("additives")</th>
+                                    <th>@Messages("price")</th>
                                     <th></th>
                                 </tr>
                             </thead>
@@ -69,7 +69,7 @@
                                         </td>
                                     } else {
                                         <td>
-                                            No additives
+                                            @Messages("additives.no")
                                         </td>
                                     }
                                     <td>
@@ -84,7 +84,7 @@
                             <tfoot>
                                 <tr class="active total-row">
                                     <th></th>
-                                    <th>TOTAL</th>
+                                    <th>@Messages("customer.total")</th>
                                     <th>@orderFull.totalPrice</th>
                                     <th></th>
                                 </tr>
@@ -92,15 +92,15 @@
                         </table>
                     </div>
                 } else {
-                    No Articles
+                    @Messages("article.noArticles")
                     <hr/>
                 }
             </div>
         </div>
         <div class="col-lg-5">
             <div class="form-group">
-                <a href="@routes.CustomerController.getCompany(orderFull.orderInfo.companyId.toString)" class="btn btn-primary" role="button">Back To Articles</a>
-                <input type="submit" class="btn btn-warning align-right" value="Submit Order">
+                <a href="@routes.CustomerController.getCompany(orderFull.orderInfo.companyId.toString)" class="btn btn-primary" role="button">@Messages("customer.back.articles")</a>
+                <input type="submit" class="btn btn-warning align-right" value="@Messages("order.submit")">
             </div>
         </div>
     }

@@ -53,16 +53,14 @@ object ArticleService {
     }
   }
 
-  def updateArticle(editArticleData: EditArticleData): Unit = {
-    val oldArticle = findById(editArticleData.articleId).getOrElse(throw new Exception("Article dosen't exist"))
-    val newArticle = Article(Some(editArticleData.articleId), editArticleData.name, editArticleData.description,
-      editArticleData.price, editArticleData.pictureLocation, editArticleData.weight, oldArticle.companyId, oldArticle.status)
+  def updateArticle(editArticleData: EditArticleData, pictureUrl: String): Unit = {
+    val oldArticle = findById(editArticleData.articleId).getOrElse(throw new Exception("Article doesn't exist"))
+    val newArticle = Article(Some(editArticleData.articleId), editArticleData.name, editArticleData.description, editArticleData.price, pictureUrl, editArticleData.weight, oldArticle.companyId, oldArticle.status)
     update(oldArticle.id.get, newArticle)
   }
 
-  def createArticle(createArticleData: CreateArticleData): Long = {
-    val article = Article(None, createArticleData.name, createArticleData.description, createArticleData.price,
-       createArticleData.pictureLocation, createArticleData.weight, createArticleData.companyId, ArticleStatus.Active)
+  def createArticle(createArticleData: CreateArticleData, pictureUrl: String): Long = {
+    val article = Article(None, createArticleData.name, createArticleData.description, createArticleData.price, pictureUrl, createArticleData.weight, createArticleData.companyId, ArticleStatus.Active)
     val articleId = create(article)
 
     articleId

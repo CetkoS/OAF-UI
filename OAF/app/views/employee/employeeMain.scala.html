@@ -31,13 +31,16 @@
             <div class="collapse navbar-collapse navbar-ex1-collapse">
                 <ul class="nav navbar-nav side-nav">
                     <li>
-                        <a href="#">Active Orders</a>
+                        <a href="@routes.EmployeeController.getOrders("New")">New Orders</a>
                     </li>
                     <li>
-                        <a href="#">Completed Orders</a>
+                        <a href="@routes.EmployeeController.getOrders("Active")">Active Orders</a>
                     </li>
                     <li>
-                        <a href="#">Deliviered Orders</a>
+                        <a href="@routes.EmployeeController.getOrders("Ready")">Ready Orders</a>
+                    </li>
+                    <li>
+                        <a href="@routes.EmployeeController.getOrders("Completed")">Completed Orders</a>
                     </li>
                 </ul>
             </div>

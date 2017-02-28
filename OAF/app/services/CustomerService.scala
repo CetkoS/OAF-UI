@@ -1,9 +1,12 @@
 package services
 
+import java.sql.Timestamp
+
 import com.oaf.dal.dal.{OrderedArticleDAO, OrderDAO}
 import com.oaf.dal.enums.{PaymentMethodEnum, DeliveryEnum, OrderStatus}
 import forms.customer.{SubmitOrderData, AddToCartData}
 import models.{OrderFull, OrderedArticle, Order}
+import org.joda.time.DateTime
 import play.api.Play.current
 
 
@@ -12,7 +15,7 @@ object CustomerService {
 
   def createPendingOrder(sessionId: String, companyId: Long): Long = {
     play.api.db.slick.DB.withTransaction { implicit session =>
-      val order = Order(None, OrderStatus.Pending, "", DeliveryEnum.No, PaymentMethodEnum.Cash, "", sessionId, None, companyId)
+      val order = Order(None, OrderStatus.Pending, "", DeliveryEnum.No, PaymentMethodEnum.Cash, "", sessionId, None, companyId, None, None)
       OrderDAO.create(order)
     }
   }
@@ -69,14 +72,16 @@ object CustomerService {
             case None => throw new IllegalArgumentException()
             case Some(oldOrder) => {
               val newOrder = Order( oldOrder.id,
-                OrderStatus.PendingApproval,
+                OrderStatus.New,
                 orderData.customerName,
                 DeliveryEnum.withName(orderData.delivery),
                 PaymentMethodEnum.withName(orderData.paymentMethod),
                 orderData.phoneNumber,
                 oldOrder.sessionId,
                 orderData.addressLine,
-                orderData.companyId)
+                orderData.companyId,
+                oldOrder.timeToBeReady,
+                Some(new Timestamp(System.currentTimeMillis())))
               OrderDAO.update(orderData.orderId, newOrder)
             }
           }

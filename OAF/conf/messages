@@ -1,5 +1,56 @@
-hello="Hello"
+#global
+language.english=English
+language.serbian=Serbian
 
-#registration
+#customer
+customer.back.companies=Back To Companies
+customer.back.articles=Back To Articles
+customer.total=TOTAL
+customer.proceed=Proceed
+customer.cart=Cart
+customer.lostData=You will lose data if you leave page!
+order.information=Order Information
+name.your=Your Name
+paymentMethod=Payment Method
+payment.cash=Cash
+payment.card=Card
+delivery=Delivery
+delivery.no=No
+delivery.company=Company
+delivery.taxi=Taxi
+articles=Articles
+additives=Additives
+price=Price
+additives.no=No Additives
+order.submit=Order Submit
+order.addToCart=Add To Cart
 
-registration.title=Registration
+#address
+address.addressLine=Address Line
+address=Address
+address.city=City
+address.postalCode=Postal Code
+address.country=Country
+
+#company
+company.noCompanies=No available companies
+companies=Companies
+
+#admin
+basic.info=Basic Info
+file.logo=Logo file
+
+#article
+article.noArticles=No aviableble articles
+
+#general
+description=Description
+weight=Weight
+name=Name
+phoneNumber=Phone number
+button.ok=Ok
+button.cancel=Cancel
+button.back=Back
+button.save=Save
+delete=Delete
+delete.confirmation=Are you sure you want to delete selected article?

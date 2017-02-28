@@ -12,7 +12,6 @@ case class CreateArticleData
   description: Option[String],
   price: Double,
   weight: Option[Double],
-  pictureLocation: Option[String],
   companyId: Long
 )
 
@@ -23,7 +22,6 @@ object CreateArticleForm {
         "description" -> optional(text),
         "price" -> of[Double],
         "weight" -> optional(of[Double]),
-        "pictureLocation" -> optional(text),
         "companyId" -> longNumber
       )(CreateArticleData.apply)(CreateArticleData.unapply)
         verifying ("Article name already exists.", result => result match {

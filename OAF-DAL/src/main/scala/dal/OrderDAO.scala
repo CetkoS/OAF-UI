@@ -9,6 +9,7 @@ import play.api.db.slick.Session
 object OrderDAO extends BaseDAO[OrderDBModel,Long, Session]{
 
 
+
   def findAll(implicit session: Session): List[OrderDBModel] = {
     orders.list
   }
@@ -36,6 +37,11 @@ object OrderDAO extends BaseDAO[OrderDBModel,Long, Session]{
 
   def findBySessionId(companyId: Long, sessionId: String)(implicit session: Session): Option[OrderDBModel] = {
     orders.filter(a => a.companyId === companyId && a.sessionId === sessionId && a.status === OrderStatus.Pending).firstOption
+  }
+
+  def acceptOrder(id: Long, timeToBeReady: Long)(implicit session: Session): Unit = {
+    val q = for { order <- orders if order.id === id } yield (order.status, order.timeToBeReady)
+    q.update(OrderStatus.Active, timeToBeReady)
   }
 
 }

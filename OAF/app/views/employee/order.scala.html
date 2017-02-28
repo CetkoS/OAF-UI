@@ -1,0 +1,122 @@
+@(orderFull: OrderFull, user: User)(implicit flash: Flash)
+
+@import helper._
+@employeeMain(user, "Welcome to Play") {
+    @helper.form(action = routes.EmployeeController.acceptOrder()){
+        <div class="row">
+            <input name="orderId" value=@orderFull.orderInfo.id.get class="form-control" type="hidden">
+            <input name="companyId" value=@orderFull.orderInfo.companyId class="form-control" type="hidden">
+
+            <div class="col-lg-5">
+                <h3>
+                    Order Information
+                </h3>
+                <div class="form-group">
+                    <label>Your Name</label>
+                    <input name="customerName" class="form-control" value="@orderFull.orderInfo.customerName" readonly>
+                </div>
+                <div class="form-group">
+                    <label>Phone Number</label>
+                    <input name="phoneNumber" class="form-control" value="@orderFull.orderInfo.customerPhoneNumber" readonly>
+                </div>
+                <div class="form-group">
+                    <label>Payment Method</label>
+                    <input class="form-control" value="@orderFull.orderInfo.paymentMethod" readonly>
+                </div>
+                <div class="form-group">
+                    <label>Delivery</label>
+                    <input class="form-control" value="@orderFull.orderInfo.delivery" readonly>
+                </div>
+                <div class="form-group">
+                    <label>Address line</label>
+                    <input class="form-control" value="@orderFull.orderInfo.addressLine.getOrElse("")" readonly>
+                </div>
+            </div>
+            <div class="col-lg-7">
+                <h3>
+                    Articles
+                </h3>
+                @if(orderFull.orderedArticles.size > 0) {
+                    <div class="table-responsive">
+                        <table class="table table-hover table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Additives</th>
+                                    <th>Price</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            @for(article <- orderFull.orderedArticles){
+                                <tr>
+                                    <td>@article.articleInfo.name</td>
+                                    @if(article.additives.size > 0){
+                                        <td>
+                                            @for(additive <- article.additives){
+                                                <span>
+                                                    @additive.name
+                                                </span>
+                                            }
+                                        </td>
+                                    } else {
+                                        <td>
+                                            No additives
+                                        </td>
+                                    }
+                                    <td>
+                                        @article.articleInfo.price
+                                    </td>
+                                </tr>
+                            }
+                            </tbody>
+                            <tfoot>
+                                <tr class="active total-row">
+                                    <th></th>
+                                    <th>TOTAL</th>
+                                    <th>@orderFull.totalPrice</th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                } else {
+                    No Articles
+                    <hr/>
+                }
+                <div>
+                    <label>Time to be ready</label>
+                    <input name="timeToBeReady" required>
+                    <label>Minutes</label>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-5">
+            <div class="form-group">
+                <button data-toggle="modal" data-target="#myModal" class="btn btn-danger">
+                    Reject
+                </button>
+                <input type="submit" class="btn btn-warning align-right" value="Accept">
+            </div>
+        </div>
+    }
+        <!-- Modal -->
+    <div id="myModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+        @helper.form(action = routes.EmployeeController.rejectOrder(orderFull.orderInfo.id.get.toString)){
+                <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Reject</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to reject this order?</p>
+                </div>
+                <div class="modal-footer">
+                    <input type="submit" class="btn btn-default" value="Yes"/>
+                    <button type="button" class="btn btn-default" data-dismiss="modal" >Cancel</button>
+                </div>
+            </div>
+        }
+        </div>
+    </div>
+}

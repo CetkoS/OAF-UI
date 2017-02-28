@@ -6,9 +6,9 @@ object OrderStatus extends DBEnum {
 
   val Pending = Value(0)
   val Active = Value(1)
-  val Completed = Value(2)
-  val Delivered = Value(3)
+  val Ready = Value(2)
+  val Completed = Value(3)
   val Inactive = Value(4)
-  val PendingApproval = Value(5)
+  val New = Value(5)
 
 }

@@ -1,3 +1,56 @@
-hello= "Zdravo"
+#global
+language.english=Engleski
+language.serbian=Srpski
 
-registration.title="Registracija"
+#customer
+customer.back.companies=Vrati se na listu radnji
+customer.back.articles=Vrati se na listu artikala
+customer.total=SUMA
+customer.proceed=Naruči
+customer.cart=Korpa
+customer.lostData=Ako napustite stranicu izgubićete podatke! Korpa će se isprazniti!
+order.information=Informacije o narudzbini
+name.your=Vaše Ime
+paymentMethod=Način plaćanja
+payment.cash=Gotovina
+payment.card=Kartica
+delivery=Dostava
+delivery.no=Lično preuzimanje
+delivery.company=Dostava preko radnje
+delivery.taxy=Taksi
+articles=Artikli
+additives=Dodaci
+price=Cena
+additives.no=Nema Dodataka
+order.submit=Naruči
+order.addToCart=Dodaj u korpu
+
+#address
+address.addressLine=Ulica i broj
+address=Adresa
+address.city=Grad
+address.postalCode=Poštanski broj
+address.country=Država
+
+#company
+company.noCompanies=Nema radnji
+companies=Radnje
+
+#admin
+basic.info=Osnovne Informacije
+file.logo=Logo
+
+#article
+article.noArticles=Nema artikala
+
+#general
+description=Opis
+weight=Težina
+name=Ime
+phoneNumber=Broj telefona
+button.ok=Uredu
+button.cancel=Odbij
+button.back=Nazad
+button.save=Sačuvaj
+delete=Obriši
+delete.confirmation=Da li ste sigurni da želite da obrišete artikal?

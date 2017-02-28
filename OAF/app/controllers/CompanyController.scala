@@ -2,8 +2,11 @@ package controllers
 
 import com.oaf.dal.enums.Role.Administrator
 import forms.{EditCompanyForm, CreateCompanyForm}
+import play.api.Logger
 import play.api.data.Form
 import services.{AddressService, CompanyService}
+import java.io.File
+
 
 
 class CompanyController extends BaseController {
@@ -21,19 +24,28 @@ class CompanyController extends BaseController {
       Ok(views.html.admin.company(user, company, address,CreateCompanyForm.getCreateCompanyData.asInstanceOf[Form[AnyRef]]))
   }
 
-  def create = StackAction(AuthorityKey -> Administrator) { implicit request =>
+  def create = StackAction(parse.multipartFormData, AuthorityKey -> Administrator) { implicit request =>
     CreateCompanyForm.getCreateCompanyData.bindFromRequest.fold(
       formWithErrors => {
         BadRequest(views.html.admin.company(loggedIn, None, None, formWithErrors.asInstanceOf[Form[AnyRef]]))
       },
       companyData => {
+        request.body.file("logo").map { picture =>
+          val folder = companyData.name.replaceAll("\\s", "") + "/"
+          val dir = new File("public/images/" + folder)
+          dir.mkdir()
+          val logoFile = new File(s"public/images/$folder" + "logo")
+          logoFile.delete()
+          picture.ref.moveTo(logoFile)
+        }
         CompanyService.create(companyData)
         Redirect(routes.CompanyController.get).flashing("success" -> "Company successfully created.")
       }
     )
   }
 
-  def update = StackAction(AuthorityKey -> Administrator) { implicit request =>
+  def update = StackAction(parse.multipartFormData, AuthorityKey -> Administrator){ implicit request =>
+
     EditCompanyForm.getEditCompanyData.bindFromRequest.fold(
       formWithErrors => {
         val user = loggedIn
@@ -48,6 +60,14 @@ class CompanyController extends BaseController {
         BadRequest(views.html.admin.company(loggedIn, company, address, formWithErrors.asInstanceOf[Form[AnyRef]]))
       },
       companyData => {
+        request.body.file("logo").map { picture =>
+          val folder = companyData.name.replaceAll("\\s", "") + "/"
+          val dir = new File("public/images/" + folder)
+          dir.mkdir()
+          val logoFile = new File(s"public/images/$folder" + "logo")
+          logoFile.delete()
+          picture.ref.moveTo(logoFile)
+        }
         CompanyService.update(companyData)
         Redirect(routes.CompanyController.get).flashing("success" -> "Company successfully updated.")
       }

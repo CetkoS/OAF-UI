@@ -47,10 +47,15 @@ POST    /deletePendingOrder/:companyId  @controllers.CustomerController.deletePe
 POST    /deleteOrderedArticle/:companyId @controllers.CustomerController.deleteOrderedArticle(companyId)
 GET     /order/:companyId                 @controllers.CustomerController.getOrder(companyId)
 POST    /order                          @controllers.CustomerController.submitOrder()
+GET     /customer/changeLanguage/:newLang @controllers.CustomerController.changeLanguage(newLang)
 
 #Employee
 GET    /employee                       @controllers.EmployeeController.employeeStartPage
-
+GET    /employee/orders/:status        @controllers.EmployeeController.getOrders(status)
+GET    /employee/order/:id             @controllers.EmployeeController.getOrderById(id)
+POST   /employee/acceptOrder           @controllers.EmployeeController.acceptOrder
+POST   /employee/rejectOrder/:id       @controllers.EmployeeController.rejectOrder(id)
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
+
 

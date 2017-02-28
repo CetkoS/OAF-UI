@@ -6,6 +6,7 @@ import forms.{LoginForm, RegistrationForm}
 import jp.t2v.lab.play2.auth.{AuthElement, LoginLogout}
 import play.api.Logger
 import play.api.db.slick.DBAction
+import play.api.i18n.Lang
 import play.api.mvc.{Action, Controller}
 import services.{RegistrationService, UserService}
 import play.api.Play.current

@@ -4,6 +4,8 @@ import forms.customer.{SubmitOrderForm, AddToCartForm}
 import play.api.Logger
 import play.api.mvc.Action
 import services.{CustomerService, AdditiveService, CompanyService, ArticleService}
+import play.api.i18n.Lang
+import play.api.Play.current
 
 class CustomerController extends BaseController {
 
@@ -90,5 +92,10 @@ class CustomerController extends BaseController {
         Redirect(routes.CustomerController.getCompany(submitOrderData.companyId.toString())).flashing("success" -> "Your order is successfully sent!")
         }
     )
+  }
+
+  def changeLanguage(newLang: String) = Action {implicit request =>
+    val lang = Lang.apply(newLang)
+    Redirect(routes.CustomerController.getAll()).withLang(lang)
   }
 }

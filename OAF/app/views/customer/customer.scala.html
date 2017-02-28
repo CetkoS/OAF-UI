@@ -1,19 +1,19 @@
-@(companies: List[Company])(implicit flash: Flash)
+@(companies: List[Company])(implicit flash: Flash, lang: Lang)
 
 @import helper._
 @customerMain("Welcome to Play") {
 
     <h1 class="page-header">
-        Companies
+        @Messages("companies")
     </h1>
             @if(companies.size > 0) {
                 <div class="table-responsive">
                     <table class="table table-hover table-striped">
                         <thead>
                             <tr>
-                                <th>Name</th>
-                                <th>Description</th>
-                                <th>Phone number</th>
+                                <th>@Messages("name")</th>
+                                <th>@Messages("description")</th>
+                                <th>@Messages("phoneNumber")</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -28,7 +28,7 @@
                     </table>
                 </div>
             } else {
-                No aviableble companies
+                @Messages("company.noCompanies")
                 <hr/>
             }
 }

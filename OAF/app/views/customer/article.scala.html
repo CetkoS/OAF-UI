@@ -1,4 +1,4 @@
-@(article: Article, additives: List[Additive], orderFull: Option[OrderFull])(implicit flash: Flash)
+@(article: Article, additives: List[Additive], orderFull: Option[OrderFull])(implicit flash: Flash, lang: Lang)
 
 @import helper._
 @customerMain("Welcome to Play", orderFull) {
@@ -11,28 +11,28 @@
             </div>
             <div class="col-lg-3">
                 <div class="form-group">
-                    <label>Description</label>
+                    <label>@Messages("description")</label>
                     <div class="text-area indent-element form-control">
                         @article.description
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label>Weight</label>
+                    <label>@Messages("weight")</label>
                     <div class="text-area indent-element form-control">
                         @article.weight
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label>Price</label>
+                    <label>@Messages("price")</label>
                     <div class="text-area indent-element form-control">
                         @article.price
                     </div>
                 </div>
             </div>
             <div class="col-lg-9">
-                <h4 class="header-panel">Additives</h4>
+                <h4 class="header-panel">@Messages("additives")</h4>
                 @if(additives.size > 0) {
                             @for(additive <- additives){
                                 <div class="checkbox indent-element">
@@ -40,14 +40,14 @@
                                     </div>
                             }
                 } else {
-                    No aviableble additives
+                    @Messages("additives.no")
                     <hr/>
                 }
             </div>
             <hr class="hr-line">
             <div class="col-sm-5">
-                <a href="@routes.CustomerController.getCompany(article.companyId.toString)" class="btn btn-primary" role="button">Back</a>
-                <input type="submit" class="btn btn-warning align-right" value="Add to chart">
+                <a href="@routes.CustomerController.getCompany(article.companyId.toString)" class="btn btn-primary" role="button">@Messages("button.back")</a>
+                <input type="submit" class="btn btn-warning align-right" value="@Messages("order.addToCart")">
             </div>
         </div>
     }
