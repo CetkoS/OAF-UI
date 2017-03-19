@@ -23,3 +23,11 @@ $(document).on("change", ".delivery", function () {
         $("#addressLine").prop('required',false);
     }
 });
+
+
+$(document).on("change", "#select-all", function () {
+        var checked = this.checked;
+        $('.check-box').each(function () {
+            this.checked = checked;
+        });
+});

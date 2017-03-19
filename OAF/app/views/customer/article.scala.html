@@ -34,9 +34,12 @@
             <div class="col-lg-9">
                 <h4 class="header-panel">@Messages("additives")</h4>
                 @if(additives.size > 0) {
+                            <div class="checkbox">
+                                <label><input name="select-all" id="select-all" type="checkbox"><b>@Messages("selectAll")</b></label>
+                            </div>
                             @for(additive <- additives){
                                 <div class="checkbox indent-element">
-                                <label><input type="checkbox" name="additive[@additive.id]" value="@additive.id">@additive.name</label>
+                                <label><input class="check-box" type="checkbox" name="additive[@additive.id]" value="@additive.id">@additive.name</label>
                                     </div>
                             }
                 } else {

@@ -10,7 +10,8 @@ case class CreateAdditiveData
 (
   name: String,
   description: Option[String],
-  companyId: Long
+  companyId: Long,
+  articleGroup: String
 )
 
 object CreateAdditiveForm {
@@ -18,7 +19,8 @@ object CreateAdditiveForm {
       mapping(
         "name" -> nonEmptyText,
         "description" -> optional(text),
-        "companyId" -> longNumber
+        "companyId" -> longNumber,
+        "articleGroup"-> nonEmptyText
       )(CreateAdditiveData.apply)(CreateAdditiveData.unapply)
         verifying ("Additive name already exists.", result => result match {
         case additiveData => checkAdditiveNameUnique(additiveData.name, additiveData.companyId)

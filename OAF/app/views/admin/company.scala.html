@@ -6,7 +6,7 @@
     @if(company.isEmpty){
        @helper.form(action = routes.CompanyController.create(), 'enctype -> "multipart/form-data"){
            <h1 class="page-header">
-               @Messages("companies")
+               @Messages("company")
            </h1>
            <div class="col-lg-7">
                <h3 class="page-header">
@@ -55,11 +55,11 @@
     } else {
         @helper.form(action = routes.CompanyController.update(), 'enctype -> "multipart/form-data"){
             <h1 class="page-header">
-                Company
+                @Messages("company")
             </h1>
             <div class="col-lg-7">
                 <h3 class="page-header">
-                    Basic info
+                    @Messages("basic.info")
                 </h3>
                 <input name="companyId" value=@company.get.id.get class="form-control" type="hidden">
                 <input name="addressId" value=@company.get.addressId class="form-control" type="hidden">
@@ -67,51 +67,51 @@
 
 
                 <div class="form-group">
-                    <label>Name</label>
-                    <input name="name" value=@company.get.name class="form-control" required readonly>
+                    <label>@Messages("name")</label>
+                    <input name="name" value="@company.get.name" class="form-control" required readonly>
                 </div>
                 <div class="form-group">
-                    <label>Description</label>
+                    <label>@Messages("description")</label>
                     <textarea name="description" class="form-control" rows="3">@company.get.description</textarea>
                 </div>
                 <div class="form-group">
-                    <label>Phone Number</label>
-                    <input name="phoneNumber" value=@company.get.phoneNumber class="form-control" required>
+                    <label>@Messages("phoneNumber")</label>
+                    <input name="phoneNumber" value="@company.get.phoneNumber" class="form-control" required>
                 </div>
 
                 <h3 class="page-header">
-                    Address
+                 @Messages("address")
                 </h3>
 
                 <div class="form-group">
-                    <label>Address line</label>
-                    <input name="addressLine" value=@address.get.addressLine class="form-control" required>
+                    <label>@Messages("address.addressLine")</label>
+                    <input name="addressLine" value="@address.get.addressLine" class="form-control" required>
                 </div>
                 <div class="form-group">
-                    <label>Postal code</label>
-                    <input name="postalCode" value=@address.get.postalCode class="form-control" required>
+                    <label>@Messages("address.postalCode")</label>
+                    <input name="postalCode" value="@address.get.postalCode" class="form-control" required>
                 </div>
                 <div class="form-group">
-                    <label>City</label>
-                    <input name="city" value=@address.get.city class="form-control" required>
+                    <label>@Messages("address.city")</label>
+                    <input name="city" value="@address.get.city" class="form-control" required>
                 </div>
                 <div class="form-group">
-                    <label>Country</label>
-                    <input name="country" value=@address.get.country class="form-control" required>
+                    <label>@Messages("address.country")</label>
+                    <input name="country" value="@address.get.country" class="form-control" required>
                 </div>
-                <input type="submit" class="btn btn-default" value="Update">
+                <input type="submit" class="btn btn-default" value="@Messages("button.save")">
             </div>
             @if(company.get.logoUrl.isEmpty){
                 <div class="form-group">
-                    <label>Logo file</label>
+                    <label>@Messages("file.logo")</label>
                     <input name="logo" accept="image/*">
                 </div>
             } else {
                 <div class="form-group col-lg-5">
-                    <label>Logo</label>
-                    <img class="img-responsive" src=@routes.Assets.versioned("images/" + company.get.name + "/logo") alt="">
+                    <label>@Messages("file.logo")</label>
+                    <img class="img-responsive" src="@routes.Assets.versioned("images/" + company.get.name + "/logo")" alt="">
                 </div>
-                <label>Change Logo</label>
+                <label>@Messages("file.logo.change")</label>
                 <input type="file" name="logo" accept="image/*">
             }
 

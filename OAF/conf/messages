@@ -35,13 +35,43 @@ address.country=Country
 #company
 company.noCompanies=No available companies
 companies=Companies
+company=Company
 
 #admin
 basic.info=Basic Info
 file.logo=Logo file
+file.logo.change=Change logo
+profile=Profile
+logout=Logout
+employees=Employees
+articles=Articles
+additives=Additives
+username=Username
+firstName=First Name
+lastName=Last Name
+email=Email
+employee.create=Create Employee
+employee.edit=Edit Employee
+employee.add=Add Employee
+employee.noRegistred=No Registered Employees
+company.create.first=You first need to create company
+status=Status
 
 #article
-article.noArticles=No aviableble articles
+article.noArticles=No aviablable articles
+article.group=Article Group
+article.group.drink=Drink
+article.group.meal=Meal
+article.group.dessert=Dessert
+article.add=Add Article
+article.create=Article Create
+article.edit=Article Edit
+
+#additive
+additive.add=Add Additive
+additive.create=Create Additive
+additive.edit=Edit Additive
+additive.noAdditives=No Additives
 
 #general
 description=Description
@@ -52,5 +82,9 @@ button.ok=Ok
 button.cancel=Cancel
 button.back=Back
 button.save=Save
+button.edit=Edit
 delete=Delete
 delete.confirmation=Are you sure you want to delete selected article?
+selectAll=Select all
+picture=Picture
+picture.change=Change Picture

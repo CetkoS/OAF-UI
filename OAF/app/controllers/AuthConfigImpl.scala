@@ -114,7 +114,7 @@ trait AuthConfigImpl extends AuthConfig {
      * Whether use the secure option or not use it in the cookie.
      * Following code is default.
      */
-    cookieSecureOption = play.api.Play.isProd(play.api.Play.current),
+    cookieSecureOption = false,
     cookieMaxAge       = Some(sessionTimeoutInSeconds)
   )
 

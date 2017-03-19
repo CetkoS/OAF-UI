@@ -1,9 +1,9 @@
-@(user: User, employee: User, editForm: Option[Form[AnyRef]] = None)(implicit flash: Flash)
+@(user: User, employee: User, editForm: Option[Form[AnyRef]] = None)(implicit flash: Flash, lang: Lang)
 
 @import helper._
 @admin.adminMain("Welcome to Play", user, editForm) {
     <h1 class="page-header">
-        Edit Employee
+        @Messages("employee.edit")
     </h1>
 
     <div class="col-lg-7">
@@ -14,23 +14,23 @@
             <input name="employeeId" value=@employee.id.get class="form-control" type="hidden">
             <input name="companyId" value=@user.companyId.get class="form-control" type="hidden">
             <div class="form-group">
-                <label>Username</label>
+                <label>@Messages("username")</label>
                 <input name="username" value=@employee.username class="form-control" readonly>
             </div>
             <div class="form-group">
-                <label>First name</label>
+                <label>@Messages("firstName")</label>
                 <input name="firstName" value=@employee.firstName class="form-control" >
             </div>
             <div class="form-group">
-                <label>Last name</label>
+                <label>@Messages("lastName")</label>
                 <input name="lastName" value=@employee.lastName class="form-control" required>
             </div>
 
             <div class="form-group">
-                <label>Email</label>
+                <label>@Messages("email")</label>
                 <input class="form-control"  name="email" type="email" required value=@employee.email>
             </div>
-            <input type="submit" class="btn btn-default" value="Update">
+            <input type="submit" class="btn btn-default" value="@Messages("button.save")">
         }
     </div>
 }

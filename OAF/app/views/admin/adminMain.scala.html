@@ -1,4 +1,4 @@
-@(title: String, user: User, currentForm: Option[Form[AnyRef]] = None)(content: Html)(implicit flash: Flash)
+@(title: String, user: User, currentForm: Option[Form[AnyRef]] = None)(content: Html)(implicit flash: Flash, lang: Lang)
 @import play.api.i18n.Messages.Message
 
 @main("Welcome to Play") {
@@ -14,16 +14,21 @@
                 <a class="navbar-brand" href="@routes.CompanyController.get()">Order a food</a>
             </div>
             <ul class="nav navbar-right top-nav">
-
+                <li>
+                      <a href="@routes.CompanyController.changeLanguage("en")">@Messages("language.english")</a>
+                </li>
+                <li>
+                      <a href="@routes.CompanyController.changeLanguage("sr")">@Messages("language.serbian")</a>
+                </li>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <span class="glyphicon glyphicon-user" aria-hidden="true"></span> @user.firstName @user.lastName<b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         <li>
-                            <a href="#">Profile</a>
+                            <a href="#">@Messages("profile")</a>
                         </li>
                         <li class="divider"></li>
                         <li>
-                            <a href=@routes.RegistrationController.logout()>Log Out</a>
+                            <a href=@routes.RegistrationController.logout()>@Messages("logout")</a>
                         </li>
                     </ul>
                 </li>
@@ -31,16 +36,16 @@
             <div class="collapse navbar-collapse navbar-ex1-collapse">
                 <ul class="nav navbar-nav side-nav">
                     <li>
-                        <a href=@routes.CompanyController.get()>Company</a>
+                        <a href=@routes.CompanyController.get()>@Messages("company")</a>
                     </li>
                     <li>
-                        <a href=@routes.EmployeeController.getAll()>Employees</a>
+                        <a href=@routes.EmployeeController.getAll()>@Messages("employees")</a>
                     </li>
                     <li>
-                        <a href="@routes.ArticleController.getAll()">Articles</a>
+                        <a href="@routes.ArticleController.getAll()">@Messages("articles")</a>
                     </li>
                     <li>
-                        <a href="@routes.AdditiveController.getAll()">Aditives</a>
+                        <a href="@routes.AdditiveController.getAll()">@Messages("additives")</a>
                     </li>
                 </ul>
             </div>

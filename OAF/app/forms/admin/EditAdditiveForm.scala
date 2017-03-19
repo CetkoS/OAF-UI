@@ -10,7 +10,8 @@ case class EditAdditiveData
 (
   additiveId: Long,
   name: String,
-  description: Option[String]
+  description: Option[String],
+  articleGroup: String
 )
 
 object EditAdditiveForm {
@@ -18,7 +19,8 @@ object EditAdditiveForm {
       mapping(
         "additiveId" -> longNumber,
         "name" -> nonEmptyText,
-        "description" -> optional(text)
+        "description" -> optional(text),
+        "articleGroup" -> nonEmptyText
       )(EditAdditiveData.apply)(EditAdditiveData.unapply)
   )
 }

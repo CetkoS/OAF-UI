@@ -1,35 +1,35 @@
-@(user: User, employeeForm: Form[AnyRef])(implicit flash: Flash)
+@(user: User, employeeForm: Form[AnyRef])(implicit flash: Flash, lang: Lang)
 
 @import helper._
 @admin.adminMain("Welcome to Play", user, Some(employeeForm)) {
     <h1 class="page-header">
-        Create Employee
+        @Messages("employee.create")
     </h1>
 
     <div class="col-lg-7">
         <h3 class="page-header">
-            Basic info
+            @Messages("basic.info")
         </h3>
         @helper.form(action = routes.EmployeeController.create()){
             <input name="companyId" value=@user.companyId.get class="form-control" type="hidden">
             <div class="form-group">
-                <label>Username</label>
+                <label>@Messages("username")</label>
                 <input name="username" class="form-control" required>
             </div>
             <div class="form-group">
-                <label>First name</label>
+                <label>@Messages("firstName")</label>
                 <input name="firstName" class="form-control">
             </div>
             <div class="form-group">
-                <label>Last name</label>
+                <label>@Messages("lastName")</label>
                 <input name="lastName" class="form-control" required>
             </div>
 
             <div class="form-group">
-                <label>Email</label>
+                <label>@Messages("email")</label>
                 <input class="form-control"  name="email" type="email" required>
             </div>
-            <input type="submit" class="btn btn-default" value="Save">
+            <input type="submit" class="btn btn-default" value="@Messages("button.save")">
             }
     </div>
 

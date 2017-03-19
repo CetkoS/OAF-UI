@@ -45,6 +45,7 @@ class ArticleController extends BaseController {
           val pictureFile = new File("public/" + pictureUrl)
           pictureFile.delete()
           picture.ref.moveTo(pictureFile)
+          Logger.info("Picture url " + pictureUrl)
         }
         ArticleService.updateArticle(editArticleData, pictureUrl)
         Redirect(routes.ArticleController.showEditPage(editArticleData.articleId.toString)).flashing("success" -> "Article successfully updated.")
@@ -62,7 +63,7 @@ class ArticleController extends BaseController {
         request.body.file("picture").map { picture =>
           val company = CompanyService.findById(createArticleData.companyId).getOrElse(throw new IllegalArgumentException("Create article no company"))
           val folder = company.name.replaceAll("\\s", "") + "/"
-          pictureUrl = "images/$folder" + createArticleData.name
+          pictureUrl = s"images/$folder" + createArticleData.name.replaceAll("\\s", "")
           val pictureFile = new File("public/" + pictureUrl)
           picture.ref.moveTo(pictureFile)
         }

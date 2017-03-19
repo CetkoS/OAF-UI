@@ -35,13 +35,43 @@ address.country=Država
 #company
 company.noCompanies=Nema radnji
 companies=Radnje
+company=Radnja
 
 #admin
 basic.info=Osnovne Informacije
 file.logo=Logo
+file.logo.change=Promeni logo
+profile=Profil
+logout=Odjavi se
+employees=Zaposleni
+articles=Artikli
+additives=Dodaci
+username=Korisničko ime
+firstName=Ime
+lastName=Prezime
+email=E-mejl
+employee.create=Napravi Zaposlenog
+employee.edit=Izmeni Zaposlenog
+employee.add=Dodaj Zaposlenog
+employee.noRegistred=Nema registrovanih zaposlenih
+company.create.first=Prvo morate popuniti podatke vezane za radnju
+status=Status
 
 #article
 article.noArticles=Nema artikala
+article.group=Grupa Artikla
+article.group.drink=Napitak
+article.group.meal=Obrok
+article.group.dessert=Dezert
+article.add=Dodaj Artikal
+article.create=Kreiranje Artikla
+article.edit=Promena Artikla
+
+#additive
+additive.add=Dodaj Dodatak
+additive.create=Napravi Dodatak
+additive.edit=Promeni Dodatak
+additive.noAdditives=Nema dodataka
 
 #general
 description=Opis
@@ -52,5 +82,9 @@ button.ok=Uredu
 button.cancel=Odbij
 button.back=Nazad
 button.save=Sačuvaj
+button.edit=Promeni
 delete=Obriši
 delete.confirmation=Da li ste sigurni da želite da obrišete artikal?
+selectAll=Izaberi sve
+picture=Slika
+picture.change=Promeni Sliku

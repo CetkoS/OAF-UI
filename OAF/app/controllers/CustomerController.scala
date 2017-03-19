@@ -38,7 +38,7 @@ class CustomerController extends BaseController {
 
   def getArticle(articleId: String) = Action { implicit request =>
     val article = ArticleService.findById(articleId.toLong).get
-    val additives = AdditiveService.findAllAdditivesByCompanyId(article.companyId)
+    val additives = AdditiveService.findAllAdditivesByCompanyId(article.companyId).filter(ad => ad.articleGroup == article.group)
     val orderFull = request.session.get("session-id") match {
       case None => None
       case Some(sessionId) => CustomerService.getFullOrderBySessionId(article.companyId, sessionId)

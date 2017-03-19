@@ -16,6 +16,7 @@ GET    /logout                        @controllers.RegistrationController.logout
 GET    /admin                         @controllers.CompanyController.get
 POST   /admin/company/add             @controllers.CompanyController.create
 POST   /admin/company/edit            @controllers.CompanyController.update
+GET    /admin/changeLanguage/:newLang @controllers.CompanyController.changeLanguage(newLang)
 #Admin Employee
 GET    /admin/employees/create        @controllers.EmployeeController.showCreatePage
 GET    /admin/employees               @controllers.EmployeeController.getAll

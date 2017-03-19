@@ -13,7 +13,8 @@ case class EditArticleData
   description: Option[String],
   price: Double,
   weight: Option[Double],
-  companyId: Long
+  companyId: Long,
+  group: String
 )
 
 object EditArticleForm {
@@ -24,7 +25,8 @@ object EditArticleForm {
         "description" -> optional(text),
         "price" -> of[Double],
         "weight" -> optional(of[Double]),
-        "companyId" -> longNumber
+        "companyId" -> longNumber,
+        "group" -> nonEmptyText
       )(EditArticleData.apply)(EditArticleData.unapply)
   )
 }

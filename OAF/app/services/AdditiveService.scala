@@ -1,7 +1,7 @@
 package services
 
 import com.oaf.dal.dal.AdditiveDAO
-import com.oaf.dal.enums.AdditiveStatus
+import com.oaf.dal.enums.{ArticleGroup, AdditiveStatus}
 import forms.admin.{CreateAdditiveData, EditAdditiveData}
 import models.Additive
 import play.api.Play.current
@@ -54,13 +54,13 @@ object AdditiveService {
   def updateAdditive(editAdditiveData: EditAdditiveData): Unit = {
     val oldAdditive = findById(editAdditiveData.additiveId).getOrElse(throw new Exception("Additive doesn't exist"))
     val newAdditive = Additive(Some(editAdditiveData.additiveId), editAdditiveData.name, editAdditiveData.description,
-       oldAdditive.companyId, oldAdditive.status)
+       oldAdditive.companyId, oldAdditive.status, ArticleGroup.withName(editAdditiveData.articleGroup))
     update(oldAdditive.id.get, newAdditive)
   }
 
   def createAdditive(createAdditiveData: CreateAdditiveData): Long = {
     val additive = Additive(None, createAdditiveData.name, createAdditiveData.description,
-      createAdditiveData.companyId, AdditiveStatus.Active)
+      createAdditiveData.companyId, AdditiveStatus.Active, ArticleGroup.withName(createAdditiveData.articleGroup))
     val additiveId = create(additive)
 
     additiveId

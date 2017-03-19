@@ -1,13 +1,13 @@
-@(user: User, employees: Option[List[User]])(implicit flash: Flash)
+@(user: User, employees: Option[List[User]])(implicit flash: Flash, lang: Lang)
 
 @import helper._
 @admin.adminMain("Welcome to Play", user) {
     <h1 class="page-header">
-        Employee
+        @Messages("employees")
     </h1>
     @employees match {
         case None => {
-            You first need to create company
+            @Messages("company.create.first")
         }
         case Some(employees) => {
             @if(employees.size > 0) {
@@ -15,9 +15,9 @@
                     <table class="table table-hover table-striped">
                         <thead>
                             <tr>
-                                <th>Username</th>
-                                <th>Email</th>
-                                <th>Status</th>
+                                <th>@Messages("username")</th>
+                                <th>@Messages("email")</th>
+                                <th>@Messages("status")</th>
                                 <th></th>
                                 <th></th>
                             </tr>
@@ -28,10 +28,10 @@
                                     <td>@employee.username</td>
                                     <td>@employee.email</td>
                                     <td>@employee.status</td>
-                                    <td><a href=@routes.EmployeeController.showEditPage(employee.id.get.toString) >Edit</a></td>
+                                    <td><a href=@routes.EmployeeController.showEditPage(employee.id.get.toString) >@Messages("button.edit")</a></td>
                                     <td>
                                         @helper.form(action = routes.EmployeeController.delete(employee.id.get.toString)){
-                                            <input type="submit" class="btn btn-danger" value="Delete">
+                                            <input type="submit" class="btn btn-danger" value="@Messages("delete")">
                                         }
                                     </td>
                                 </tr>
@@ -39,14 +39,14 @@
                             </tbody>
                     </table>
                     <div>
-                        <a href="@routes.EmployeeController.showCreatePage()" class="btn btn-default">Add Employee </a>
+                        <a href="@routes.EmployeeController.showCreatePage()" class="btn btn-default">@Messages("employee.add") </a>
                     </div>
                 </div>
             } else {
-                No registered employees
+                @Messages("employee.noRegistred")
                 <hr/>
                 <div>
-                    <a href="@routes.EmployeeController.showCreatePage()" class="btn btn-default">Add Employee </a>
+                    <a href="@routes.EmployeeController.showCreatePage()" class="btn btn-default">@Messages("employee.add") </a>
                 </div>
 
             }

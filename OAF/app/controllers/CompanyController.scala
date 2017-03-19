@@ -4,8 +4,11 @@ import com.oaf.dal.enums.Role.Administrator
 import forms.{EditCompanyForm, CreateCompanyForm}
 import play.api.Logger
 import play.api.data.Form
+import play.api.i18n.Lang
+import play.api.mvc.Action
 import services.{AddressService, CompanyService}
 import java.io.File
+import play.api.Play.current
 
 
 
@@ -72,6 +75,11 @@ class CompanyController extends BaseController {
         Redirect(routes.CompanyController.get).flashing("success" -> "Company successfully updated.")
       }
     )
+  }
+
+  def changeLanguage(newLang: String) = Action {implicit request =>
+    val lang = Lang.apply(newLang)
+    Redirect(routes.CompanyController.get()).withLang(lang)
   }
 
 }

@@ -12,7 +12,8 @@ case class CreateArticleData
   description: Option[String],
   price: Double,
   weight: Option[Double],
-  companyId: Long
+  companyId: Long,
+  group: String
 )
 
 object CreateArticleForm {
@@ -22,7 +23,8 @@ object CreateArticleForm {
         "description" -> optional(text),
         "price" -> of[Double],
         "weight" -> optional(of[Double]),
-        "companyId" -> longNumber
+        "companyId" -> longNumber,
+        "group" -> nonEmptyText
       )(CreateArticleData.apply)(CreateArticleData.unapply)
         verifying ("Article name already exists.", result => result match {
         case articleData => checkArticleNameUnique(articleData.name, articleData.companyId)

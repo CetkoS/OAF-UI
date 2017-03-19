@@ -1,7 +1,7 @@
 package services
 
 import com.oaf.dal.dal.ArticleDAO
-import com.oaf.dal.enums.ArticleStatus
+import com.oaf.dal.enums.{ArticleGroup, ArticleStatus}
 import forms.admin.{EditArticleData, CreateArticleData}
 import models.{Article, User}
 import play.api.db.slick._
@@ -55,12 +55,14 @@ object ArticleService {
 
   def updateArticle(editArticleData: EditArticleData, pictureUrl: String): Unit = {
     val oldArticle = findById(editArticleData.articleId).getOrElse(throw new Exception("Article doesn't exist"))
-    val newArticle = Article(Some(editArticleData.articleId), editArticleData.name, editArticleData.description, editArticleData.price, pictureUrl, editArticleData.weight, oldArticle.companyId, oldArticle.status)
+    val newArticle = Article(Some(editArticleData.articleId), editArticleData.name, editArticleData.description, editArticleData.price, pictureUrl,
+      editArticleData.weight, oldArticle.companyId, oldArticle.status, ArticleGroup.withName(editArticleData.group))
     update(oldArticle.id.get, newArticle)
   }
 
   def createArticle(createArticleData: CreateArticleData, pictureUrl: String): Long = {
-    val article = Article(None, createArticleData.name, createArticleData.description, createArticleData.price, pictureUrl, createArticleData.weight, createArticleData.companyId, ArticleStatus.Active)
+    val article = Article(None, createArticleData.name, createArticleData.description, createArticleData.price, pictureUrl,
+      createArticleData.weight, createArticleData.companyId, ArticleStatus.Active, ArticleGroup.withName(createArticleData.group))
     val articleId = create(article)
 
     articleId
