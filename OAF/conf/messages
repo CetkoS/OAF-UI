@@ -66,12 +66,28 @@ article.group.dessert=Dessert
 article.add=Add Article
 article.create=Article Create
 article.edit=Article Edit
+article.number=Number of articles
 
 #additive
 additive.add=Add Additive
 additive.create=Create Additive
 additive.edit=Edit Additive
 additive.noAdditives=No Additives
+
+#order
+orders.new=New Orders
+orders.active=Active Orders
+orders.ready=Ready Orders
+orders.completed=Completed Orders
+order.accept=Accept
+time.ready=Time to be ready
+time.minutes=Minutes
+reject.message=Are you sure you want to reject this order?
+order.noOrders=No Orders
+time.created=Time Created
+time.ready=Time to be ready
+time.preparation.duration=Duration of preparation
+order.view=View
 
 #general
 description=Description
@@ -83,8 +99,13 @@ button.cancel=Cancel
 button.back=Back
 button.save=Save
 button.edit=Edit
+button.accept=Accept
+button.reject=Reject
+button.ready= Order is ready
+button.completed= Order is completed
 delete=Delete
 delete.confirmation=Are you sure you want to delete selected article?
 selectAll=Select all
 picture=Picture
 picture.change=Change Picture
+time=Time

@@ -44,4 +44,9 @@ object OrderDAO extends BaseDAO[OrderDBModel,Long, Session]{
     q.update(OrderStatus.Active, timeToBeReady)
   }
 
+  def updateOrderStatus(id: Long, status: OrderStatus.Value)(implicit session: Session): Unit = {
+    val q = for { order <- orders if order.id === id } yield (order.status)
+    q.update(status)
+  }
+
 }

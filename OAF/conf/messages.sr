@@ -66,12 +66,32 @@ article.group.dessert=Dezert
 article.add=Dodaj Artikal
 article.create=Kreiranje Artikla
 article.edit=Promena Artikla
+article.number=Broj Artikla
+
 
 #additive
 additive.add=Dodaj Dodatak
 additive.create=Napravi Dodatak
 additive.edit=Promeni Dodatak
 additive.noAdditives=Nema dodataka
+
+
+#order
+orders.new=Nove Narudzbine
+orders.active=Aktivne Narudzbine
+orders.ready=Spremne Narudzbine
+orders.completed=Kompletirane Narudzbine
+order.accept=Prihvati
+time.ready=Vreme za koje će biti gotovo
+time.minutes=Minuta
+reject.message=Da li ste sigurni da želite da odbijete ovu narudzbinu?
+order.noOrders=Nema narudzbina
+time.created=Vreme Naručivanja
+time.ready=Vreme završetka pripreme
+time.preparation.duration=Dužina spremanja
+order.view=Vidi
+
+
 
 #general
 description=Opis
@@ -83,8 +103,13 @@ button.cancel=Odbij
 button.back=Nazad
 button.save=Sačuvaj
 button.edit=Promeni
+button.accept=Prihvati
+button.reject=Odbij
+button.ready= Narudzbina je spremna
+button.completed=Narudzbina je kompletirana
 delete=Obriši
 delete.confirmation=Da li ste sigurni da želite da obrišete artikal?
 selectAll=Izaberi sve
 picture=Slika
 picture.change=Promeni Sliku
+time=Vreme

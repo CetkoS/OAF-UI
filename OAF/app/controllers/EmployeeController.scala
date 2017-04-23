@@ -1,14 +1,16 @@
 package controllers
 
+import com.oaf.dal.enums.OrderStatus
 import com.oaf.dal.enums.Role.{Employee, Administrator}
 import forms.CreateCompanyForm
 import forms.admin.{CreateEmployeeForm, EditEmployeeForm}
-import forms.employee.AcceptOrderForm
+import forms.employee.{OrderIdForm, AcceptOrderForm}
 import models.User
 import play.api.Logger
 import play.api.Play.current
 import play.api.data.Form
 import play.api.db.slick.{DBAction, _}
+import play.api.i18n.Lang
 import services.{EmployeeService, AddressService, CompanyService, UserService}
 
 class EmployeeController extends BaseController {
@@ -106,9 +108,37 @@ class EmployeeController extends BaseController {
     )
   }
 
+  def updateOrderStatus(orderStatus: String) = StackAction(AuthorityKey -> Employee) { implicit request =>
+    OrderIdForm.getOrderIdData.bindFromRequest.fold(
+      formWithErrors => {
+        BadRequest("Error Accept Order")
+      },
+      orderIdData => {
+        orderStatus match {
+          case "Active" => {
+            EmployeeService.updateOrderStatus(orderIdData, OrderStatus.Ready)
+            Redirect(routes.EmployeeController.getOrders("Active")).flashing("success" -> "Order is now ready.")
+          }
+          case "Ready" => {
+            EmployeeService.updateOrderStatus(orderIdData, OrderStatus.Completed)
+            Redirect(routes.EmployeeController.getOrders("Ready")).flashing("success" -> "Order is now completed.")
+          }
+          case _ => {
+            Redirect(routes.EmployeeController.getOrders("Active")).flashing("error" -> "Wrong order status!")
+          }
+        }
+      }
+    )
+  }
+
   def rejectOrder(id: String) = StackAction(AuthorityKey -> Employee) { implicit request =>
     EmployeeService.rejectOrder(id.toLong)
     Redirect(routes.EmployeeController.getOrders("New")).flashing("success" -> "Order rejected.")
+  }
+
+  def changeLanguage(newLang: String) = StackAction(AuthorityKey -> Employee) {implicit request =>
+    val lang = Lang.apply(newLang)
+    Redirect(routes.EmployeeController.getOrders("New")).withLang(lang)
   }
 
   }

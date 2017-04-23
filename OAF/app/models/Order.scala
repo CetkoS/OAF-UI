@@ -19,7 +19,6 @@ case class Order
   companyId: Long,
   timeToBeReady: Option[Long],
   timeCreated: Option[Timestamp]
-
 )
 
 object Order {

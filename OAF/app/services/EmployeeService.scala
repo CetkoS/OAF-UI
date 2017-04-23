@@ -2,7 +2,7 @@ package services
 
 import com.oaf.dal.dal.{OrderedArticleDAO, OrderDAO}
 import com.oaf.dal.enums.OrderStatus
-import forms.employee.AcceptOrderData
+import forms.employee.{OrderIdData, AcceptOrderData}
 import models.{OrderedArticle, OrderFull, Order}
 import play.api.Play.current
 
@@ -18,6 +18,12 @@ object EmployeeService {
         OrderDAO.acceptOrder(acceptOrderData.orderId, acceptOrderData.timeToBeReady)
       }
     }
+
+  def updateOrderStatus(orderIdData: OrderIdData, status: OrderStatus.Value): Unit = {
+    play.api.db.slick.DB.withTransaction { implicit session =>
+      OrderDAO.updateOrderStatus(orderIdData.orderId, status)
+    }
+  }
 
   def getOrdersByStatus(companyId: Long, status: String): List[OrderFull] = {
     play.api.db.slick.DB.withTransaction { implicit session =>
