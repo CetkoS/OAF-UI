@@ -27,8 +27,6 @@
     padding: 6px 12px;
     font-size: 14px;
     line-height: 1.42857143;
-    color: #555;
-    background-color: #fff;
     background-image: none;
     -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
     box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
@@ -43,4 +41,145 @@
 }
 .time-to-be-ready {
     color: #d58512;
+}
+.company-record {
+    border: #ffe6e6 solid 2px;
+    padding: 10px 10px 10px 10px;
+    margin: 5px 10px 15px 2px;
+    border-radius: 15px;
+    box-shadow: 2px 2px 2px #ffe6e6;
+    background-image: url("brick-wall-dark.png");
+    background-color: #ff3333;
+}
+.company-record-name {
+    text-shadow: 2px 0px 20px rgba(255, 255, 255, 1);
+    text-align: center;
+    color: #ffffff;
+}
+.company-map {
+    height: 300px;
+    border-radius: 15px;
+    border: #ffffff dotted 2px;
+}
+.company-information {
+    font-style: italic;
+    color:#ffffff;
+    font-size: medium;
+    font-size: inherit;
+    font-family:  'Lato', sans-serif;
+}
+.company-information-label {
+    text-align:right;
+    font-weight: 700;
+    color:#ffffff;
+    font-size: medium;
+    font-family:  'Lato', sans-serif;
+    font-size: inherit;
+}
+.company-info-header {
+    text-align: center;
+    color: #ffffff;
+}
+.order-button {
+    color: red;
+    font-size: large;
+    font-weight: 900;
+}
+
+#customer-nav-bar.customer-navbar{
+    background-image: linear-gradient(to bottom,#ff3333 0,#b30000 100%);
+    color:#ffffff;
+}
+#page-wrapper.company-background {
+    background-image: url("45-degree-fabric-light.png");
+    background-color: #737373;
+    height:100%;
+}
+#customer-nav-bar > ul > li > a, #customer-nav-bar > div > a  {
+    color:#ffffff;
+}
+html, body {
+    width: 100%;
+    height: 100%;
+}
+
+.article {
+    border: #ffe6e6 solid 2px;
+    padding: 10px 10px 10px 10px;
+    border-radius: 15px;
+    background-image: url("brick-wall-dark.png");
+    background-color: #ff3333;
+}
+.article-image {
+    border: #ffe6e6 solid 1px;
+    border-radius: 10px;
+}
+.company-article-name {
+    text-shadow: 2px 0px 20px rgba(255, 255, 255, 1);
+    text-align: center;
+    color: #ffffff;
+    margin-top: 0px;
+}
+#customer-side-nav-bar.customer-navbar{
+    background-image: linear-gradient(to left,#ff3333 0,#b30000 100%);
+    color:#ffffff;
+}
+
+@media (max-width: 1025px){
+        .font-size{
+            font-size: 1.8em;
+        }
+        h1 {
+            font-size:2.8em;
+        }
+        h2 {
+            font-size:2.3em;
+        }
+        h3{
+            font-size:2.0em;
+        }
+        button{
+            font-size:2.3em;
+        }
+        label{
+            font-size: 2.0em;
+        }
+        input {
+            min-height:30px;
+            min-width:30px;
+        }
+        .div-info {
+            font-size: 2.0em;
+            font-weight: 700;
+            height:50px;
+            overflow: hidden;
+        }
+        nav {
+            height: 80px;
+            vertical-align: middle;
+            padding-bottom: 20px;
+        }
+        .navbar-header {
+            padding-top: 5px;
+            font-size: 1.5em;
+        }
+        .navbar-brand {
+            font-size:0.8em;
+        }
+        .navbar-right {
+            padding-top: 15px;
+        }
+        table {
+            font-size: 2.0em;
+            font-weight: 700;
+        }
+        .total-row{
+            font-weight: 900;
+        }
+}
+#page-wrapper.article-order {
+    background-image: url("brick-wall-dark.png");
+    background-color: #ff3333;
+    height:2000px;
+    color:#ffffff
 }

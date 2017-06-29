@@ -31,3 +31,23 @@ $(document).on("change", "#select-all", function () {
             this.checked = checked;
         });
 });
+
+
+function initMap() {
+    $maps = $('.company-map');
+    $maps.each(function(index, Element) {
+        var lon = $(Element).data('lon');
+        var lng = $(Element).data('lng');
+        if(lon != 0 || lng != 0){
+            var uluru = {lat: lon, lng: lng};
+            var map = new google.maps.Map(Element, {
+                zoom: 17,
+                center: uluru
+            });
+            var marker = new google.maps.Marker({
+                position: uluru,
+                map: map
+            });
+        }
+    });
+}

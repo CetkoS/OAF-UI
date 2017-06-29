@@ -9,37 +9,37 @@
             <div class="col-lg-12">
                 <h1 class="page-header">@article.name</h1>
             </div>
-            <div class="col-lg-3">
+            <div class="col-xs-6">
                 <div class="form-group">
                     <label>@Messages("description")</label>
-                    <div class="text-area indent-element form-control">
+                    <div class="text-area indent-element form-control div-info">
                         @article.description
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label>@Messages("weight")</label>
-                    <div class="text-area indent-element form-control">
+                    <div class="text-area indent-element form-control div-info">
                         @article.weight
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label>@Messages("price")</label>
-                    <div class="text-area indent-element form-control">
+                    <div class="text-area indent-element form-control div-info">
                         @article.price
                     </div>
                 </div>
             </div>
-            <div class="col-lg-9">
+            <div class="col-xs-6">
                 <h4 class="header-panel">@Messages("additives")</h4>
                 @if(additives.size > 0) {
                             <div class="checkbox">
-                                <label><input name="select-all" id="select-all" type="checkbox"><b>@Messages("selectAll")</b></label>
+                                <label><input name="select-all" id="select-all" type="checkbox"><b>&nbsp &nbsp @Messages("selectAll")</b></label>
                             </div>
                             @for(additive <- additives){
                                 <div class="checkbox indent-element">
-                                <label><input class="check-box" type="checkbox" name="additive[@additive.id]" value="@additive.id">@additive.name</label>
+                                <label><input class="check-box" type="checkbox" name="additive[@additive.id]" value="@additive.id">&nbsp &nbsp @additive.name</label>
                                     </div>
                             }
                 } else {
@@ -49,9 +49,17 @@
             </div>
             <hr class="hr-line">
             <div class="col-sm-5">
-                <a href="@routes.CustomerController.getCompany(article.companyId.toString)" class="btn btn-primary" role="button">@Messages("button.back")</a>
-                <input type="submit" class="btn btn-warning align-right" value="@Messages("order.addToCart")">
+                <a href="@routes.CustomerController.getCompany(article.companyId.toString)" class="btn btn-default div-info" role="button">@Messages("button.back")</a>
+                <input type="submit" class="btn btn-warning align-right div-info" value="@Messages("order.addToCart")">
             </div>
         </div>
     }
 }
+    <script>
+$( document ).ready(function() {
+    console.log( "ready!" );
+    $('#page-wrapper').removeClass('company-background');
+    $('#page-wrapper').addClass('article-order');
+});
+
+    </script>

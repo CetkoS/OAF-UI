@@ -9,11 +9,11 @@
         </div>
             @if(articles.size > 0) {
                         @for(article <- articles){
-                            <div class="col-lg-3 col-md-4 col-xs-6 thumb">
-                                <a class="thumbnail" href="@routes.CustomerController.getArticle(article.id.get.toString())">
-                                    <h4 class="header-panel">@article.name</h4>
-                                    <img class="img-responsive" src=@routes.Assets.versioned(article.pictureLocation) alt="">
-                                </a>
+                            <div class="col-lg-3 col-md-6 font-size" style="padding: 10px 10px 10px 10px;">
+                                <div class="clickable-row article" data-href="@routes.CustomerController.getArticle(article.id.get.toString())">
+                                        <h2 style="white-space: nowrap;" class="company-article-name">@article.name</h2>
+                                        <img class="img-responsive article-image" src="@routes.ImageController.getByUrl(article.pictureLocation)" alt="">
+                                </div>
                             </div>
                         }
             } else {

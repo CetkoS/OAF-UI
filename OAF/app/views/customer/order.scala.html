@@ -8,27 +8,27 @@
             <input name="companyId" value=@orderFull.orderInfo.companyId class="form-control" type="hidden">
 
             <div class="col-lg-5">
-                <h3>
+                <h1>
                     @Messages("order.information")
-                </h3>
+                </h1>
                 <div class="form-group">
                     <label>@Messages("name.your")</label>
-                    <input name="customerName" class="form-control" required>
+                    <input name="customerName" class="form-control div-info" required>
                 </div>
                 <div class="form-group">
                     <label>@Messages("phoneNumber")</label>
-                    <input name="phoneNumber" class="form-control" required>
+                    <input name="phoneNumber" class="form-control div-info" required>
                 </div>
                 <div class="form-group">
                     <label>@Messages("paymentMethod")</label>
-                    <select name="paymentMethod" class="form-control">
+                    <select name="paymentMethod" class="form-control div-info">
                         <option class="form-group" value="@com.oaf.dal.enums.PaymentMethodEnum.Cash">@Messages("payment.cash")</option>
                         <option class="form-group" value="@com.oaf.dal.enums.PaymentMethodEnum.Card">@Messages("payment.card")</option>
                     </select>
                 </div>
                 <div class="form-group">
                     <label>@Messages("delivery")</label>
-                    <select name="delivery" class="delivery form-control">
+                    <select name="delivery" class="delivery form-control div-info">
                         <option class="form-group" value="@com.oaf.dal.enums.DeliveryEnum.No">@Messages("delivery.no")</option>
                         <option class="form-group" value="@com.oaf.dal.enums.DeliveryEnum.Company">@Messages("delivery.company")</option>
                         <option class="form-group" value="@com.oaf.dal.enums.DeliveryEnum.Taxi">@Messages("delivery.taxi")</option>
@@ -36,17 +36,17 @@
                 </div>
                 <div id="address" class="invisible form-group">
                     <label>@Messages("address.addressLine")</label>
-                    <input name="addressLine" id="addressLine" class="form-control">
+                    <input name="addressLine" id="addressLine" class="form-control div-info ">
                     <div> &nbsp</div>
                 </div>
             </div>
             <div class="col-lg-7">
-                <h3>
+                <h2>
                     @Messages("articles")
-                </h3>
+                </h2>
                 @if(orderFull.orderedArticles.size > 0) {
                     <div class="table-responsive">
-                        <table class="table table-hover table-striped">
+                        <table class="table">
                             <thead>
                                 <tr>
                                     <th>@Messages("name")</th>
@@ -82,7 +82,7 @@
                             }
                             </tbody>
                             <tfoot>
-                                <tr class="active total-row">
+                                <tr class="total-row">
                                     <th></th>
                                     <th>@Messages("customer.total")</th>
                                     <th>@orderFull.totalPrice</th>
@@ -99,9 +99,17 @@
         </div>
         <div class="col-lg-5">
             <div class="form-group">
-                <a href="@routes.CustomerController.getCompany(orderFull.orderInfo.companyId.toString)" class="btn btn-primary" role="button">@Messages("customer.back.articles")</a>
-                <input type="submit" class="btn btn-warning align-right" value="@Messages("order.submit")">
+                <a href="@routes.CustomerController.getCompany(orderFull.orderInfo.companyId.toString)" class="div-info btn btn-default" role="button">@Messages("customer.back.articles")</a>
+                <input type="submit" class="btn btn-warning align-right div-info" value="@Messages("order.submit")">
             </div>
         </div>
     }
 }
+    <script>
+$( document ).ready(function() {
+    console.log( "ready!" );
+    $('#page-wrapper').removeClass('company-background');
+    $('#page-wrapper').addClass('article-order');
+});
+
+    </script>

@@ -1,6 +1,7 @@
 package services
 
 import com.oaf.dal.dal.{AddressDAO, UserDAO, CompanyDAO}
+import com.oaf.dal.models.CompanyDBModel
 import forms.{EditCompanyData, CreateCompanyData}
 import models.Company._
 import models.{Address, Company}
@@ -11,7 +12,18 @@ object CompanyService {
 
   def findAll: List[Company] = {
     play.api.db.slick.DB.withTransaction { implicit session =>
-      CompanyDAO.findAll.map(company => Company.convertToModel(company))
+      CompanyDAO.findAll.map {
+        companyDbModel => {
+          Company(companyDbModel.id,
+            companyDbModel.name,
+            companyDbModel.description,
+            companyDbModel.addressId,
+            companyDbModel.logoUrl,
+            companyDbModel.phoneNumber,
+            companyDbModel.ownerId,
+            AddressDAO.findById(companyDbModel.addressId).map(a => Address.convertToModel(a)))
+        }
+      }
     }
   }
 
@@ -30,12 +42,12 @@ object CompanyService {
   def update(editCompanyData: EditCompanyData): Unit = {
     play.api.db.slick.DB.withTransaction { implicit session =>
       val company = Company(Some(editCompanyData.companyId), editCompanyData.name, editCompanyData.description, editCompanyData.addressId,
-        "public/images/" + editCompanyData.name + "/" + "logo", editCompanyData.phoneNumber, editCompanyData.ownerId)
+        "public/images/" + editCompanyData.name + "/" + "logo", editCompanyData.phoneNumber, editCompanyData.ownerId, None)
 
       CompanyDAO.update(company.id.get, company)
 
       val address = Address(Some(editCompanyData.addressId), editCompanyData.addressLine, editCompanyData.city,
-        editCompanyData.postalCode, editCompanyData.country)
+        editCompanyData.postalCode, editCompanyData.country, editCompanyData.longitude, editCompanyData.latitude)
 
       AddressDAO.update(address.id.get, address)
     }
@@ -49,11 +61,11 @@ object CompanyService {
 
   def create(companyData: CreateCompanyData): Long = {
     play.api.db.slick.DB.withTransaction { implicit session =>
-      val address = Address(None, companyData.addressLine, companyData.city, companyData.postalCode, companyData.country)
+      val address = Address(None, companyData.addressLine, companyData.city, companyData.postalCode, companyData.country, companyData.longitude, companyData.latitude)
       val addressId = AddressDAO.create(address)
 
       val company = Company(None, companyData.name, companyData.description, addressId, "public/images/" + companyData.name + "/" + "logo",
-        companyData.phoneNumber, companyData.ownerId)
+        companyData.phoneNumber, companyData.ownerId, None)
       val companyId = CompanyDAO.create(company)
 
       UserDAO.updateCompanyId(companyData.ownerId, companyId)

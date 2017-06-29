@@ -45,6 +45,14 @@
                    <label>@Messages("address.country")</label>
                    <input name="country" class="form-control" required>
                </div>
+               <div class="form-group">
+                   <label>@Messages("address.longitude")</label>
+                   <input name="longitude" class="form-control">
+               </div>
+               <div class="form-group">
+                   <label>@Messages("address.latitude")</label>
+                   <input name="latitude" class="form-control">
+               </div>
                <button type="submit" class="btn btn-default">@Messages("button.save")</button>
            </div>
            <div class="form-group col-lg-5">
@@ -99,6 +107,14 @@
                     <label>@Messages("address.country")</label>
                     <input name="country" value="@address.get.country" class="form-control" required>
                 </div>
+                <div class="form-group">
+                    <label>@Messages("address.longitude")</label>
+                    <input name="longitude" value="@address.get.longitude.getOrElse(0)"  class="form-control">
+                </div>
+                <div class="form-group">
+                    <label>@Messages("address.latitude")</label>
+                    <input name="latitude" value="@address.get.longitude.getOrElse(0)" class="form-control">
+                </div>
                 <input type="submit" class="btn btn-default" value="@Messages("button.save")">
             </div>
             @if(company.get.logoUrl.isEmpty){
@@ -109,7 +125,7 @@
             } else {
                 <div class="form-group col-lg-5">
                     <label>@Messages("file.logo")</label>
-                    <img class="img-responsive" src="@routes.Assets.versioned("images/" + company.get.name + "/logo")" alt="">
+                    <img class="img-responsive" src="@routes.ImageController.get(company.get.id.get.toString() ,"logo")" alt="">
                 </div>
                 <label>@Messages("file.logo.change")</label>
                 <input type="file" name="logo" accept="image/*">

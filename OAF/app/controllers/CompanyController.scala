@@ -34,12 +34,12 @@ class CompanyController extends BaseController {
       },
       companyData => {
         request.body.file("logo").map { picture =>
+          val imageFolder = play.Play.application.configuration.getString("image.folder")
           val folder = companyData.name.replaceAll("\\s", "") + "/"
-          val dir = new File("public/images/" + folder)
+          val dir = new File(s"$imageFolder/$folder")
           dir.mkdir()
-          val logoFile = new File(s"public/images/$folder" + "logo")
-          logoFile.delete()
-          picture.ref.moveTo(logoFile)
+          val logoFile = new File(s"$imageFolder/$folder" + "logo")
+          picture.ref.moveTo(logoFile, true)
         }
         CompanyService.create(companyData)
         Redirect(routes.CompanyController.get).flashing("success" -> "Company successfully created.")
@@ -64,12 +64,12 @@ class CompanyController extends BaseController {
       },
       companyData => {
         request.body.file("logo").map { picture =>
+          val imageFolder = play.Play.application.configuration.getString("image.folder")
           val folder = companyData.name.replaceAll("\\s", "") + "/"
-          val dir = new File("public/images/" + folder)
+          val dir = new File(s"$imageFolder/$folder")
           dir.mkdir()
-          val logoFile = new File(s"public/images/$folder" + "logo")
-          logoFile.delete()
-          picture.ref.moveTo(logoFile)
+          val logoFile = new File(s"$imageFolder/$folder" + "logo")
+          picture.ref.moveTo(logoFile, true)
         }
         CompanyService.update(companyData)
         Redirect(routes.CompanyController.get).flashing("success" -> "Company successfully updated.")

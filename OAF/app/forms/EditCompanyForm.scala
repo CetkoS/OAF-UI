@@ -4,6 +4,7 @@ import play.api.data._
 import play.api.data.Forms._
 import Constraints._
 import play.api.db.slick.Session
+import play.api.data.format.Formats._
 
 case class EditCompanyData
 (
@@ -16,7 +17,9 @@ case class EditCompanyData
   country: String,
   companyId: Long,
   addressId: Long,
-  ownerId: Long
+  ownerId: Long,
+  longitude: Option[Double],
+  latitude: Option[Double]
 )
 
 object EditCompanyForm {
@@ -31,7 +34,9 @@ object EditCompanyForm {
         "country" -> nonEmptyText,
         "companyId" -> longNumber,
         "addressId" -> longNumber,
-        "ownerId" -> longNumber
+        "ownerId" -> longNumber,
+        "longitude" -> optional(of[Double]),
+        "latitude" -> optional(of[Double])
   )(EditCompanyData.apply)(EditCompanyData.unapply)
   )
 }

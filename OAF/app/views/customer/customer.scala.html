@@ -2,30 +2,46 @@
 
 @import helper._
 @customerMain("Welcome to Play") {
-
-    <h1 class="page-header">
+    <h1 style="color: #ffffff;" class="page-header">
         @Messages("companies")
     </h1>
             @if(companies.size > 0) {
-                <div class="table-responsive">
-                    <table class="table table-hover table-striped">
-                        <thead>
-                            <tr>
-                                <th>@Messages("name")</th>
-                                <th>@Messages("description")</th>
-                                <th>@Messages("phoneNumber")</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        @for(company <- companies){
-                            <tr>
-                                <td><a href="@routes.CustomerController.getCompany(company.id.get.toString)">@company.name</a></td>
-                                <td>@company.description</td>
-                                <td>@company.phoneNumber</td>
-                            </tr>
-                        }
-                        </tbody>
-                    </table>
+                <div class="row">
+                    @for(company <- companies){
+                        <div class="company-record font-size">
+                            <h2 class="company-record-name">@company.name</h2>
+                            <div class="row">
+                                <div class="col-xs-12" style="margin-bottom: 15px">
+                                    <div class="col-md-5">
+                                        <h3 class="company-info-header">@Messages("contact")</h3>
+                                        <div class="col-xs-5">
+                                            <div class="company-information-label">@Messages("address.addressLine"):</div>
+                                            <div class="company-information-label">@Messages("address.city"):</div>
+                                            <div class="company-information-label">@Messages("address.postalCode"):</div>
+                                            <div class="company-information-label">@Messages("phoneNumber"):</div>
+                                        </div>
+                                        <div class="col-xs-7">
+                                            <div class="company-information">@company.address.get.addressLine</div>
+                                            <div class="company-information">@company.address.get.city</div>
+                                            <div class="company-information">@company.address.get.postalCode</div>
+                                            <div class="company-information">@company.phoneNumber</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6" style="margin-top: 15px">
+                                        <h3 class="company-info-header">@Messages("about")</h3>
+                                        <div class="company-information">@company.description</div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-4"></div>
+                                <div class="col-xs-4" style="margin-bottom: 15px">
+                                    <button class="btn-block btn-default btn order-button" onclick="location.href='@routes.CustomerController.getCompany(company.id.get.toString())'">@Messages("order")</button>
+                                </div>
+                                <div class="col-xs-12">
+                                    <div class="company-map" id="map" data-lon="@company.address.get.longitude.getOrElse("0")" data-lng="@company.address.get.latitude.getOrElse("0")"></div>
+                                </div>
+                            </div>
+                        </div>
+                    }
                 </div>
             } else {
                 @Messages("company.noCompanies")

@@ -8,6 +8,7 @@ import play.api.Logger
 import play.api.Play.current
 import play.api.data.Form
 import play.api.db.slick.{DBAction, _}
+import play.api.libs.Files
 import services.{CompanyService, ArticleService, UserService}
 
 class ArticleController extends BaseController {
@@ -40,11 +41,11 @@ class ArticleController extends BaseController {
         var pictureUrl = ""
         request.body.file("picture").map { picture =>
           val company = CompanyService.findById(editArticleData.companyId).getOrElse(throw new IllegalArgumentException("Create article no company"))
+          val imageFolder = play.Play.application.configuration.getString("image.folder")
           val folder = company.name.replaceAll("\\s", "") + "/"
-          pictureUrl = s"images/$folder" + editArticleData.name.replaceAll("\\s", "")
-          val pictureFile = new File("public/" + pictureUrl)
-          pictureFile.delete()
-          picture.ref.moveTo(pictureFile)
+          pictureUrl = s"$imageFolder/$folder" + editArticleData.name.replaceAll("\\s", "")
+          val pictureFile = new File(pictureUrl)
+          picture.ref.moveTo(pictureFile, true)
           Logger.info("Picture url " + pictureUrl)
         }
         ArticleService.updateArticle(editArticleData, pictureUrl)
@@ -63,8 +64,9 @@ class ArticleController extends BaseController {
         request.body.file("picture").map { picture =>
           val company = CompanyService.findById(createArticleData.companyId).getOrElse(throw new IllegalArgumentException("Create article no company"))
           val folder = company.name.replaceAll("\\s", "") + "/"
-          pictureUrl = s"images/$folder" + createArticleData.name.replaceAll("\\s", "")
-          val pictureFile = new File("public/" + pictureUrl)
+          val imageFolder = play.Play.application.configuration.getString("image.folder")
+          pictureUrl = s"$imageFolder/$folder" + createArticleData.name.replaceAll("\\s", "")
+          val pictureFile = new File(pictureUrl)
           picture.ref.moveTo(pictureFile)
         }
         ArticleService.createArticle(createArticleData, pictureUrl)

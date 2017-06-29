@@ -31,6 +31,8 @@ address=Address
 address.city=City
 address.postalCode=Postal Code
 address.country=Country
+address.longitude=Longitude
+address.latitude=Latitude
 
 #company
 company.noCompanies=No available companies
@@ -109,3 +111,6 @@ selectAll=Select all
 picture=Picture
 picture.change=Change Picture
 time=Time
+about=About
+contact=Contact
+order=Order

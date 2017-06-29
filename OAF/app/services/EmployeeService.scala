@@ -35,7 +35,7 @@ object EmployeeService {
     play.api.db.slick.DB.withTransaction { implicit session =>
           val order = Order.convertToModel(OrderDAO.findById(orderId).getOrElse(throw new IllegalArgumentException()))
           val orderedArticles = OrderedArticleDAO.findByOrderId(orderId).map(OrderedArticle.convertToModel(_))
-          val totalSum = orderedArticles.foldRight(0.0)((a,b) => a.articleInfo.price + b)
+          val totalSum = BigDecimal(orderedArticles.foldRight(0.0)((a,b) => a.articleInfo.price + b)).setScale(2, BigDecimal.RoundingMode.HALF_UP).toDouble
           OrderFull(order, orderedArticles, totalSum)
     }
   }

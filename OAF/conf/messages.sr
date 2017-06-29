@@ -31,6 +31,8 @@ address=Adresa
 address.city=Grad
 address.postalCode=Poštanski broj
 address.country=Država
+address.longitude=Longitude
+address.latitude=Latitude
 
 #company
 company.noCompanies=Nema radnji
@@ -92,7 +94,6 @@ time.preparation.duration=Dužina spremanja
 order.view=Vidi
 
 
-
 #general
 description=Opis
 weight=Težina
@@ -113,3 +114,6 @@ selectAll=Izaberi sve
 picture=Slika
 picture.change=Promeni Sliku
 time=Vreme
+about=Opis
+contact=Kontakt
+order=Naruči

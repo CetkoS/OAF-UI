@@ -10,14 +10,15 @@ case class Company
   addressId: Long,
   logoUrl: String,
   phoneNumber: String,
-  ownerId: Long
+  ownerId: Long,
+  address: Option[Address]
 )
 
 object Company {
 
   implicit def convertToModel(companyDbModel: CompanyDBModel) : Company = {
     Company(companyDbModel.id, companyDbModel.name, companyDbModel.description, companyDbModel.addressId,
-      companyDbModel.logoUrl, companyDbModel.phoneNumber, companyDbModel.ownerId)
+      companyDbModel.logoUrl, companyDbModel.phoneNumber, companyDbModel.ownerId, None)
   }
 
   implicit def convertToDBModel(company: Company) : CompanyDBModel = {

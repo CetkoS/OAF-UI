@@ -54,7 +54,7 @@
     </div>
         <div class="form-group col-lg-3 col-md-4 col-xs-6">
             <label>@Messages("picture")</label>
-            <img class="img-responsive" src=@routes.Assets.versioned(article.pictureLocation + "") alt="">
+            <img class="img-responsive" src=@routes.ImageController.getByUrl(article.pictureLocation) alt="">
             <label>@Messages("picture.change")</label>
             <input type="file" name="picture" accept="image/*">
         </div>
