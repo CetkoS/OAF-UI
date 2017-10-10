@@ -5,9 +5,15 @@ import com.oaf.dal.enums.{ArticleGroup, ArticleStatus}
 import scala.slick.lifted.Tag
 import play.api.db.slick.Config.driver.simple._
 
-  case class ArticleDBModel(id: Option[Long], name: String, description: Option[String], price: Double,
-                            pictureLocation: String, weight: Option[Double],
-                            companyId: Long, status: ArticleStatus.Value, group: ArticleGroup.Value)
+  case class ArticleDBModel(id: Option[Long],
+                            name: String,
+                            description: Option[String],
+                            price: Double,
+                            pictureLocation: String,
+                            weight: Option[Double],
+                            companyId: Long,
+                            status: ArticleStatus.Value,
+                            group: ArticleGroup.Value)
 
 
   class ArticleTable(tag: Tag) extends Table[ArticleDBModel](tag, "ARTICLE") {

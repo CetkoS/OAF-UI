@@ -4,8 +4,13 @@ package com.oaf.dal.models
 import scala.slick.lifted.Tag
 import play.api.db.slick.Config.driver.simple._
 
-  case class CompanyDBModel(id: Option[Long], name: String, description: String, addressId: Long,
-                            logoUrl: String, phoneNumber: String, ownerId: Long)
+  case class CompanyDBModel(id: Option[Long],
+                            name: String,
+                            description: String,
+                            addressId: Long,
+                            logoUrl: String,
+                            phoneNumber: String,
+                            ownerId: Long)
 
 
   class CompanyTable(tag: Tag) extends Table[CompanyDBModel](tag, "COMPANY") {
